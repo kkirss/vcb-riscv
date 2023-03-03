@@ -22,7 +22,7 @@ All jump targets:
 TODO: Needs finalizing
 
 All register write sources:
-* rs1+rs2 (ADD)
+* rs1+r2 (ADD)
 * rs1+imm (ADDI)
 * PC+4 (JAL, JALR)
 * MEM-OUT-DATA (STORE)
@@ -38,15 +38,15 @@ TODO: Needs finalizing
 
 Instructions that require multiple operations:
 * JAL: PC+imm & PC+4
-* JALR: rs1+imm & PC+4
-* BRANCH: rs1?rs2 & PC+imm
+* JALR: r1+imm & PC+4
+* BRANCH: r1?r2 & PC+imm
 
 ### ALU Usage Choice
 
 Choice primarily depends on the BRANCH instruction.
-Either rs1?rs2 or PC+imm needs a separate component.
+Either r1?r2 or PC+imm needs a separate component.
 
-Separate rs1?rs2 advantages:
+Separate r1?r2 advantages:
 1. TODO Are there any?
 
 Separate PC+imm advantages:
@@ -60,19 +60,19 @@ TODO: Needs finalizing
 
 All multiplexers required:
 * PC-SRC
-  * 1: JUMP-TARGET
+  * 1: jump-target
   * 0: PC+4
 * ALU-INP2
-  * 1: rs2
+  * 1: r2
   * 0: imm
 * JUMP-TARGET:
   * 1: PC+imm
-  * 2: ALU-OUT
+  * 2: alu-out
 * EX-OUT-DATA:
   * 11: PC+imm
   * 10: PC+4
   * 01: imm
-  * 00: ALU-OUT
+  * 00: alu-out
 * MEM-OUT-DATA
-  * 1: MEM-READ-DATA
-  * 0: EX-OUT-DATA
+  * 1: mem-read-data
+  * 0: ex-out-data
