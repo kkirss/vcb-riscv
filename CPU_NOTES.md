@@ -11,21 +11,19 @@ Only significantly different instructions are listed.
 
 ### Jump targets
 
-TODO: Needs finalizing
-
 All jump targets:
 * PC+imm (JAL, BRANCH)
 * rs1+imm (JALR)
 
 ### Register write sources
 
-TODO: Needs finalizing
-
 All register write sources:
-* rs1+r2 (ADD)
-* rs1+imm (ADDI)
+* rs1#r2 (OP)
+* rs1#imm (OP-IMM)
+* load-data (STORE)
 * PC+4 (JAL, JALR)
-* MEM-OUT-DATA (STORE)
+* imm (LUI)
+* PC+imm (AUIPC)
 
 ## ALU Usage
 
