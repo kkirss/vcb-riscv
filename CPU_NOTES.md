@@ -58,19 +58,19 @@ TODO: Needs finalizing
 
 All multiplexers required:
 * PC-SRC
-  * 1: jump-target
+  * 1: j-target
   * 0: PC+4
-* ALU-INP2
+* ALU-I2-SRC
   * 1: r2
   * 0: imm
-* JUMP-TARGET:
+* J-TARGET-SRC:
   * 1: PC+imm
   * 2: alu-out
-* EX-OUT-DATA:
+* EX-OUT-SRC:
   * 11: PC+imm
   * 10: PC+4
   * 01: imm
   * 00: alu-out
-* MEM-OUT-DATA
+* MEM-OUT-SRC
   * 1: load-data
   * 0: ex-out-data
