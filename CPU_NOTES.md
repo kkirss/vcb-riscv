@@ -32,8 +32,6 @@ Thus, there's a need to choose which operation the ALU is used for.
 
 ### Multiple operation instructions
 
-TODO: Needs finalizing
-
 Instructions that require multiple operations:
 * JAL: PC+imm & PC+4
 * JALR: r1+imm & PC+4
@@ -45,7 +43,9 @@ Choice primarily depends on the BRANCH instruction.
 Either r1?r2 or PC+imm needs a separate component.
 
 Separate r1?r2 advantages:
-1. TODO Are there any?
+1. Could potentially be faster than an adder?
+   * This could potentially allow for EX stage to be faster.
+     This depends on timing of various pieces though.
 
 Separate PC+imm advantages:
 1. Could potentially be calculated in the ID stage already.
@@ -72,5 +72,5 @@ All multiplexers required:
   * 01: imm
   * 00: alu-out
 * MEM-OUT-DATA
-  * 1: mem-read-data
+  * 1: load-data
   * 0: ex-out-data
