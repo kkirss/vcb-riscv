@@ -61,8 +61,8 @@ All multiplexers required:
   * 1: j-target
   * 0: PC+4
 * ALU-I2-SRC
-  * 1: r2
-  * 0: imm
+  * 1: imm
+  * 0: r2
 * J-TARGET-SRC:
   * 1: PC+imm
   * 2: alu-out
