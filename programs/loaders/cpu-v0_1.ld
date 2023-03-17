@@ -1,4 +1,6 @@
 OUTPUT_FORMAT("elf32-littleriscv", "elf32-littleriscv", "elf32-littleriscv")
+OUTPUT_ARCH(riscv)
+
 ENTRY(main)
 
 MEMORY
@@ -9,15 +11,29 @@ MEMORY
 
 SECTIONS
 {
-  .text :
-  {
-    . = ALIGN(32 / 8);
-    *(.text)
-  }> TEXT
+    . = ORIGIN(TEXT);
 
-  .data :
-  {
+    .text : {
+        *(.text);
+    } > TEXT
+
+    . = ORIGIN(DATA);
+
+    .rodata : {
+        *(.srodata);
+        *(.rodata);
+        *(.rdata);
+    } > DATA
+
     . = ALIGN(32 / 8);
-    *(.data)
-  }> DATA
+    .data : {
+        *(.sdata);
+        *(.data);
+    } > DATA
+
+    . = ALIGN(32 / 8);
+    .bss : {
+        *(.sbss);
+        *(.bss);
+    } > DATA
 }
