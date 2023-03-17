@@ -5,12 +5,19 @@ ENTRY(main)
 
 MEMORY
 {
-  TEXT (rx) : ORIGIN = 0x0, LENGTH = 0x8000
+  NOP_START (r) : ORIGIN = 0x0, LENGTH = 0x4
+  TEXT (rx) : ORIGIN = 0x4, LENGTH = (0x8000 - 0x4)
   DATA (rwx) : ORIGIN = 0x8000, LENGTH = 0x8000
 }
 
 SECTIONS
 {
+    . = ORIGIN(NOP_START);
+
+    .nop_start : {
+        LONG(0x0);
+    } > NOP_START
+
     . = ORIGIN(TEXT);
 
     .text : {

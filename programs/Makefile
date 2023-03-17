@@ -17,6 +17,7 @@ CFLAGS += -mbranch-cost=2
 CFLAGS += -mtune=size
 CFLAGS += -nostdlib
 CFLAGS += -T $(LOADER_SCRIPT)
+#CFLAGS += -Wl,--verbose
 
 NOSTART_FLAGS += -s
 NOSTART_FLAGS += -nostartfiles
@@ -43,6 +44,7 @@ assemble: $(ELF_FILES)
 
 $(BUILD)/%.elf: $(SRC)/%.c
 	$(TARGET)-gcc -v $(CFLAGS) "$^" -o "$@"
+	$(TARGET)-readelf --all "$@"
 
 DISASSEMBLED_ELF_FILES := $(patsubst %,%.elf.d,$(ALL_TARGETS))
 .PHONY: disassemble
@@ -58,12 +60,8 @@ vcbmem: $(VCBMEM_FILES)
 $(BUILD)/%.bin: $(BUILD)/%.elf
 	$(TARGET)-objcopy -O binary "$^" "$@"
 
-# VCB loads memory in big-endian format
-# So we need to swap the endianness for the .vcbmem file
 $(BUILD)/%.vcbmem: $(BUILD)/%.bin
-	$(TARGET)-objcopy -I binary -O binary --reverse-bytes=4 "$^" "$@temp"
-	dd if="$@temp" of="$@" seek=1 bs=4
-	rm "$@temp"
+	cp "$^" "$@"
 	hexdump -C "$@"
 
 .PHONY: cpu_main_program
