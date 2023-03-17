@@ -60,8 +60,10 @@ vcbmem: $(VCBMEM_FILES)
 $(BUILD)/%.bin: $(BUILD)/%.elf
 	$(TARGET)-objcopy -O binary "$^" "$@"
 
+# VCB loads memory in big-endian format
+# So we need to swap the endianness for the .vcbmem file
 $(BUILD)/%.vcbmem: $(BUILD)/%.bin
-	cp "$^" "$@"
+	$(TARGET)-objcopy -I binary -O binary --reverse-bytes=4 "$^" "$@"
 	hexdump -C "$@"
 
 .PHONY: cpu_main_program
