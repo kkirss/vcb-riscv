@@ -1,5 +1,6 @@
 SRC := ./src
 LOADERS := ./loaders
+RUNTIMES := ./runtimes
 BUILD := ./build
 
 CPU_NAME ?= cpu-v0_1
@@ -7,6 +8,7 @@ MAIN_PROGRAM ?= fibonacci
 
 TARGET := riscv64-unknown-elf
 LOADER_SCRIPT := $(LOADERS)/$(CPU_NAME).ld
+RUNTIME_ASSEMBLY := $(RUNTIMES)/$(CPU_NAME)/crtbegin.s
 
 CFLAGS += -O0
 CFLAGS += -mabi=ilp32
@@ -18,6 +20,8 @@ CFLAGS += -mtune=size
 CFLAGS += -nostartfiles
 CFLAGS += -T $(LOADER_SCRIPT)
 #CFLAGS += -Wl,--verbose
+
+ASSEMBLE_FLAGS += -D__riscv_ $(RUNTIME_ASSEMBLY)
 
 NOSTART_FLAGS += -s
 NOSTART_FLAGS += -nostartfiles
@@ -43,7 +47,7 @@ ELF_FILES := $(patsubst %,%.elf,$(ALL_TARGETS))
 assemble: $(ELF_FILES)
 
 $(BUILD)/%.elf: $(SRC)/%.c
-	$(TARGET)-gcc -v $(CFLAGS) "$^" -o "$@"
+	$(TARGET)-gcc -v $(ASSEMBLE_FLAGS) $(CFLAGS) "$^" -o "$@"
 #	$(TARGET)-readelf --all "$@"
 
 DISASSEMBLED_ELF_FILES := $(patsubst %,%.elf.d,$(ALL_TARGETS))
