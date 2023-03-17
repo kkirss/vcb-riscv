@@ -1,4 +1,4 @@
-int _start() {
+int main() {
     int i;
     int n = 100;
     int t1 = 0;
@@ -13,4 +13,3 @@ int _start() {
 
     return 0;
 }
-
