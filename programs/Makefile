@@ -15,7 +15,7 @@ CFLAGS += -march=rv32i
 CFLAGS += -mstrict-align
 CFLAGS += -mbranch-cost=2
 CFLAGS += -mtune=size
-CFLAGS += -nostdlib
+CFLAGS += -nostartfiles
 CFLAGS += -T $(LOADER_SCRIPT)
 #CFLAGS += -Wl,--verbose
 
@@ -44,7 +44,7 @@ assemble: $(ELF_FILES)
 
 $(BUILD)/%.elf: $(SRC)/%.c
 	$(TARGET)-gcc -v $(CFLAGS) "$^" -o "$@"
-	$(TARGET)-readelf --all "$@"
+#	$(TARGET)-readelf --all "$@"
 
 DISASSEMBLED_ELF_FILES := $(patsubst %,%.elf.d,$(ALL_TARGETS))
 .PHONY: disassemble
