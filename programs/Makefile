@@ -40,7 +40,7 @@ ASSEMBLY_FILES := $(patsubst %,%.s,$(ALL_TARGETS))
 compile: $(ASSEMBLY_FILES)
 
 $(BUILD)/%.s: $(SRC)/%.c
-	$(TARGET)-gcc -S $(CFLAGS) "$^" -o "$@"
+	$(TARGET)-gcc -S -fverbose-asm $(CFLAGS) "$^" -o "$@"
 
 ELF_FILES := $(patsubst %,%.elf,$(ALL_TARGETS))
 .PHONY: assemble
