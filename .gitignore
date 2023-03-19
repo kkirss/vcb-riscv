@@ -6,3 +6,4 @@ programs/build
 .env
 
 *.vcbmem
+*.backup
