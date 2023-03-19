@@ -10,7 +10,7 @@ TARGET := riscv64-unknown-elf
 LOADER_SCRIPT := $(LOADERS)/$(CPU_NAME).ld
 RUNTIME_ASSEMBLY := $(RUNTIMES)/$(CPU_NAME)/crtbegin.s
 
-CFLAGS += -O0
+CFLAGS += -O1
 CFLAGS += -mabi=ilp32
 CFLAGS += -misa-spec=2.2
 CFLAGS += -march=rv32i
