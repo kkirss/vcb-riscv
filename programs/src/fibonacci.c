@@ -1,15 +1,15 @@
 int main() {
-    int i;
-    int n = 100;
-    int t1 = 0;
-    int t2 = 1;
-    int nextTerm = t1 + t2;
+    int n = 46;
 
-    for (i = 3; i <= n; ++i) {
+    int t1 = 0;
+    int t2 = 0;
+    int nextTerm = 1;
+
+    for (int i = 1; i <= n; ++i) {
         t1 = t2;
         t2 = nextTerm;
         nextTerm = t1 + t2;
     }
 
-    return 0;
+    return nextTerm;
 }
