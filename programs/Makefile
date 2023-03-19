@@ -73,6 +73,7 @@ $(BUILD)/%.vcbmem: $(BUILD)/%.bin
 .PHONY: cpu_main_program
 cpu_main_program: $(BUILD)/$(MAIN_PROGRAM).vcbmem
 	cp "$^" "$(BUILD)/$(CPU_NAME).vcbmem"
+	cp "$^" "$(BUILD)/$(CPU_NAME)_openvcb.vcbmem"
 
 $(BUILD)/$(CPU_NAME).vcbmem: $(BUILD)/$(MAIN_PROGRAM).vcbmem
 	cp "$^" "$@"
