@@ -8,16 +8,6 @@ This project is for use with Virtual Circuit Board (vcb).
 
 Buy it on Steam: https://store.steampowered.com/app/1885690/Virtual_Circuit_Board/
 
-## Library
-
-### Quickstart
-
-See [QUICKSTART](library/1_QUICKSTART.md).
-
-Sample:
-
-<img alt="text_mono_4x5" src="./library/vcb_blueprints/images/text_4x.png" />
-
 ## Programs
 
 There is a basic setup to compile C code into RISC-V machine code (including .vcbmem files for VCB).
@@ -66,3 +56,11 @@ Currently, there is just a simple `fibonacci.c` example program.
 ## Contributing
 
 Feel free to open issues and pull requests for improvements :)
+
+## Library
+
+There used to be a VCB circuit library in this repository.
+I have put this piece on hold for now.
+
+The `vcb_riscv` Python code is for generating images of blueprints.
+Used for this library.
