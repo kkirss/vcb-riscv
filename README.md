@@ -8,6 +8,18 @@ This project is for use with Virtual Circuit Board (vcb).
 
 Buy it on Steam: https://store.steampowered.com/app/1885690/Virtual_Circuit_Board/
 
+## Components
+
+There is a VCB file for various common components - `components.vcb`.
+
+It includes labels for everything and should be relatively straight-forward to understand.
+
+## CPU
+
+There is a VCB file for a RISC-V CPU. (In the future, multiple versions.)
+
+See [CPU-V0_1](CPU-V0_1.md) for more details. 
+
 ## Programs
 
 There is a basic setup to compile C code into RISC-V machine code (including .vcbmem files for VCB).
