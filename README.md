@@ -1,6 +1,6 @@
 # vcb-riscv
 
-Virtual Circuit Board (VCB) RISC-V CPU & circuit library.
+Virtual Circuit Board (VCB) RISC-V CPU.
 
 ## Virtual Circuit Board
 
@@ -75,5 +75,9 @@ Feel free to open issues and pull requests for improvements :)
 There used to be a VCB circuit library in this repository.
 I have put this piece on hold for now.
 
-The `vcb_riscv` Python code is for generating images of blueprints.
-Used for this library.
+### Blueprint images
+
+The `vcb_riscv` Python module is for generating images of blueprints.
+This uses the [vcbb](https://github.com/chrjen/vcbb) project internally.
+
+(Though the repository makes no use of this for now.)
