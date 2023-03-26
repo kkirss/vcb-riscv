@@ -32,10 +32,11 @@ This is all within the `programs` folder with a `Makefile` for easy usage.
 
 You need to have a gcc toolchain for RISC-V set up on your system.
 
-I recommend using [riscv-gnu-toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain) for this.
-Specifically, the Newlib cross-compiler.
+There's a bash script for setting up the toolchain on Ubuntu - `programs/setup/ubuntu-riscv-gnu-toolchain.sh`
 
-TODO: Script for Ubuntu.
+It uses the [riscv-gnu-toolchain](https://github.com/riscv-collab/riscv-gnu-toolchain) project.
+Specifically, the Newlib-based cross-compiler.
+Refer to its docs for more details.
 
 ### Usage
 
