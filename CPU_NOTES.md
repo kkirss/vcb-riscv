@@ -54,15 +54,20 @@ Separate PC+imm advantages:
 
 ## Multiplexers
 
-TODO: Needs finalizing
-
 All multiplexers required:
 * PC-SRC
   * 1: j-target
   * 0: PC+4
 * ALU-I2-SRC
-  * 1: imm
-  * 0: r2
+  * 11: EX-OUT-DATA
+  * 10: WRITE-DATA
+  * 01: imm
+  * 00: r2
+* ALU-I1-SRC
+  * 11: EX-OUT-DATA
+  * 10: WRITE-DATA
+  * 01: -
+  * 00: r1
 * J-TARGET-SRC:
   * 1: PC+imm
   * 2: alu-out
