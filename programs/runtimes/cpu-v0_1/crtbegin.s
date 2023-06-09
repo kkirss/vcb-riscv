@@ -2,15 +2,10 @@
 
 .section .text
 
-# starts with nop
-# operations and jumps
-# to reset handler
+# init stack pointer to 4M - 16
+# jump to call_main_handler
 _start:
 	.global _start
-	j reset_handler
-
-# init stack pointer to 4M - 16
-reset_handler:
 	li sp, 0x3FFFF0
 	j call_main_handler
 
@@ -22,15 +17,11 @@ call_main_handler:
 	jal main
 	j end_of_main_handler
 
-# stuck at, indicator
-# of end of execution.
+# stuck at, indicator of end of execution.
 idle:
 	j idle
 
-# move main function
-# status/return value)
-# from a0 to saved
-# register s0.
+# move main function status/return value from a0 to saved register s0.
 end_of_main_handler:
 	mv s0, a0
 	j idle
