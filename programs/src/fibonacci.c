@@ -1,15 +1,17 @@
-int main() {
-    int n = 46;
-
+int calculate_fibonacci_term(int n) {
     int t1 = 0;
     int t2 = 0;
-    int nextTerm = 1;
+    int next_term = 1;
 
     for (int i = 2; i <= n; ++i) {
         t1 = t2;
-        t2 = nextTerm;
-        nextTerm = t1 + t2;
+        t2 = next_term;
+        next_term = t1 + t2;
     }
 
-    return nextTerm;
+    return next_term;
+}
+
+int main() {
+    return calculate_fibonacci_term(46);
 }
