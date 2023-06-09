@@ -10,6 +10,7 @@ TARGET := riscv64-unknown-elf
 LOADER_SCRIPT := $(LOADERS)/$(CPU_NAME).ld
 RUNTIME_ASSEMBLY := $(RUNTIMES)/$(CPU_NAME)/crtbegin.s
 
+CC := $(TARGET)-gcc
 CFLAGS += -O1
 CFLAGS += -mabi=ilp32
 CFLAGS += -misa-spec=2.2
@@ -21,13 +22,9 @@ CFLAGS += -nostartfiles
 CFLAGS += -T $(LOADER_SCRIPT)
 #CFLAGS += -Wl,--verbose
 
-ASSEMBLE_FLAGS += -D__riscv_ $(RUNTIME_ASSEMBLY)
+LDFLAGS += -D__riscv_ $(RUNTIME_ASSEMBLY)
 
-NOSTART_FLAGS += -s
-NOSTART_FLAGS += -nostartfiles
-
-SOURCES := $(wildcard $(SRC)/*.c)
-ALL_TARGETS := $(patsubst $(SRC)/%.c,$(BUILD)/%,$(SOURCES))
+C_SOURCES := $(wildcard $(SRC)/*.c)
 
 .PHONY: all
 all: clean $(BUILD) compile assemble disassemble vcbmem cpu_main_program
@@ -35,31 +32,27 @@ all: clean $(BUILD) compile assemble disassemble vcbmem cpu_main_program
 $(BUILD):
 	mkdir -p "$(BUILD)"
 
-ASSEMBLY_FILES := $(patsubst %,%.s,$(ALL_TARGETS))
 .PHONY: compile
-compile: $(ASSEMBLY_FILES)
+compile: $(patsubst $(SRC)/%.c,$(BUILD)/%.s,$(C_SOURCES))
 
 $(BUILD)/%.s: $(SRC)/%.c
-	$(TARGET)-gcc -S -fverbose-asm $(CFLAGS) "$^" -o "$@"
+	$(CC) -S -fverbose-asm $(CFLAGS) "$^" -o "$@"
 
-ELF_FILES := $(patsubst %,%.elf,$(ALL_TARGETS))
 .PHONY: assemble
-assemble: $(ELF_FILES)
+assemble: $(patsubst $(SRC)/%.c,$(BUILD)/%.elf,$(C_SOURCES))
 
 $(BUILD)/%.elf: $(SRC)/%.c
-	$(TARGET)-gcc -v $(ASSEMBLE_FLAGS) $(CFLAGS) "$^" -o "$@"
+	$(CC) $(LDFLAGS) $(CFLAGS) "$^" -o "$@"
 #	$(TARGET)-readelf --all "$@"
 
-DISASSEMBLED_ELF_FILES := $(patsubst %,%.elf.d,$(ALL_TARGETS))
 .PHONY: disassemble
-disassemble: $(DISASSEMBLED_ELF_FILES)
+disassemble: $(patsubst $(SRC)/%.c,$(BUILD)/%.elf.d,$(C_SOURCES))
 
 $(BUILD)/%.elf.d: $(BUILD)/%.elf
 	$(TARGET)-objdump --disassemble "$^" > "$@"
 
-VCBMEM_FILES := $(patsubst %,%.vcbmem,$(ALL_TARGETS))
 .PHONY: vcbmem
-vcbmem: $(VCBMEM_FILES)
+vcbmem: $(patsubst $(SRC)/%.c,$(BUILD)/%.vcbmem,$(C_SOURCES))
 
 $(BUILD)/%.bin: $(BUILD)/%.elf
 	$(TARGET)-objcopy -O binary "$^" "$@"
