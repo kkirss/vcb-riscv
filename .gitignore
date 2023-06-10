@@ -6,5 +6,8 @@ data/
 programs/build
 .env
 
+*.o
+*.d
+*.s
 *.vcbmem
 *.backup

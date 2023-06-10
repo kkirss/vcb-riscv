@@ -11,7 +11,3 @@ int calculate_fibonacci_term(int n) {
 
     return next_term;
 }
-
-int main() {
-    return calculate_fibonacci_term(46);
-}

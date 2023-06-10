@@ -20,58 +20,100 @@ CFLAGS += -mbranch-cost=2
 CFLAGS += -mtune=size
 CFLAGS += -nostartfiles
 CFLAGS += -T $(LOADER_SCRIPT)
+CFLAGS += -MD -MP
 #CFLAGS += -Wl,--verbose
 
 LDFLAGS += -D__riscv_ $(RUNTIME_ASSEMBLY)
 
-C_SOURCES := $(wildcard $(SRC)/*.c)
-
 .PHONY: all
-all: clean $(BUILD) compile assemble disassemble vcbmem cpu_main_program
+all: build_dirs compile link vcb_vmem vcb_main_program
+
+####
+# Create build directories
+####
+
+SOURCE_DIRS := $(wildcard $(SRC)/**/)
+BUILD_DIRS := $(patsubst $(SRC)%,$(BUILD)%,$(SOURCE_DIRS))
+
+.PHONY: build_dirs
+build_dirs: $(BUILD) $(BUILD_DIRS)
+
+$(BUILD)/%/:
+	mkdir -p "$@"
 
 $(BUILD):
 	mkdir -p "$(BUILD)"
 
-.PHONY: compile
-compile: $(patsubst $(SRC)/%.c,$(BUILD)/%.s,$(C_SOURCES))
+####
+# Compile C object & assembly files
+####
 
-$(BUILD)/%.s: $(SRC)/%.c
+C_SOURCES := $(wildcard $(SRC)/**/*.c)
+C_OBJFILES := $(patsubst %.c,%.o,$(C_SOURCES))
+C_ASSEMBLY_FILES := $(patsubst %.c,%.s,$(C_SOURCES))
+
+.PHONY: compile
+compile: $(C_OBJFILES) $(C_ASSEMBLY_FILES)
+
+%.s: %.c
 	$(CC) -S -fverbose-asm $(CFLAGS) "$^" -o "$@"
 
-.PHONY: assemble
-assemble: $(patsubst $(SRC)/%.c,$(BUILD)/%.elf,$(C_SOURCES))
+# %.o: uses implicit Makefile rule
 
-$(BUILD)/%.elf: $(SRC)/%.c
-	$(CC) $(LDFLAGS) $(CFLAGS) "$^" -o "$@"
+####
+# Link object files to executables
+####
+
+MAIN_ELF_FILES := $(patsubst %,%main.elf,$(BUILD_DIRS))
+MAIN_ELF_D_FILES := $(patsubst %,%main.elf.d,$(BUILD_DIRS))
+
+.PHONY: link
+link: $(MAIN_ELF_FILES) $(MAIN_ELF_D_FILES)
+
+$(BUILD)/%/main.elf: $(SRC)/%/*.o
+	@echo "Linking $^ to $@"
+	$(CC) $(CFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o "$@"
 #	$(TARGET)-readelf --all "$@"
 
-.PHONY: disassemble
-disassemble: $(patsubst $(SRC)/%.c,$(BUILD)/%.elf.d,$(C_SOURCES))
-
-$(BUILD)/%.elf.d: $(BUILD)/%.elf
+%.elf.d: %.elf
 	$(TARGET)-objdump --disassemble "$^" > "$@"
 
-.PHONY: vcbmem
-vcbmem: $(patsubst $(SRC)/%.c,$(BUILD)/%.vcbmem,$(C_SOURCES))
+####
+# VCB VMEM conversion
+####
 
-$(BUILD)/%.bin: $(BUILD)/%.elf
+VCB_VMEM_FILES := $(patsubst %,%main.vcbmem,$(BUILD_DIRS))
+
+.PHONY: vcb_vmem
+vcb_vmem: $(VCB_VMEM_FILES)
+
+%.bin: %.elf
 	$(TARGET)-objcopy -O binary "$^" "$@"
 
 # VCB loads memory in big-endian format
 # So we need to swap the endianness for the .vcbmem file
-$(BUILD)/%.vcbmem: $(BUILD)/%.bin
+%.vcbmem: %.bin
 	$(TARGET)-objcopy -I binary -O binary --reverse-bytes=4 "$^" "$@"
 	hexdump -C "$@"
 
-.PHONY: cpu_main_program
-cpu_main_program: $(BUILD)/$(MAIN_PROGRAM).vcbmem
-	cp "$^" "$(BUILD)/$(CPU_NAME).vcbmem"
-	cp "$^" "$(BUILD)/$(CPU_NAME)_openvcb.vcbmem"
+####
+# Copy main program VCB VMEM file
+####
 
-$(BUILD)/$(CPU_NAME).vcbmem: $(BUILD)/$(MAIN_PROGRAM).vcbmem
+.PHONY: vcb_main_program
+vcb_main_program: $(BUILD)/$(CPU_NAME).vcbmem
+
+$(BUILD)/$(CPU_NAME).vcbmem: $(BUILD)/$(MAIN_PROGRAM)/main.vcbmem
 	cp "$^" "$@"
+
+####
+# Clean built files
+####
 
 .PHONY: clean
 clean:
 	@echo "Cleaning up..."
 	rm -rf $(BUILD)
+	rm -rf $(SRC)/**/*.o
+	rm -rf $(SRC)/**/*.d
+	rm -rf $(SRC)/**/*.s
