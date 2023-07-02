@@ -10,7 +10,7 @@ TARGET := riscv64-unknown-elf
 LOADER_SCRIPT := $(LOADERS)/$(CPU_NAME).ld
 RUNTIME_ASSEMBLY := $(RUNTIMES)/$(CPU_NAME)/crtbegin.s
 
-CC := $(TARGET)-gcc
+CC := $(TARGET)-g++
 CFLAGS += -O1
 CFLAGS += -mabi=ilp32
 CFLAGS += -misa-spec=2.2
@@ -21,12 +21,16 @@ CFLAGS += -mtune=size
 CFLAGS += -nostartfiles
 CFLAGS += -T $(LOADER_SCRIPT)
 CFLAGS += -MD -MP
+# Verbose logging
 #CFLAGS += -Wl,--verbose
+
+CXX := $(TARGET)-g++
+CXXFLAGS := $(CFLAGS)
 
 LDFLAGS += -D__riscv_ $(RUNTIME_ASSEMBLY)
 
 .PHONY: all
-all: build_dirs compile link vcb_vmem vcb_main_program
+all: clean build_dirs compile link vcb_vmem vcb_main_program
 
 ####
 # Create build directories
@@ -61,6 +65,23 @@ compile: $(C_OBJFILES) $(C_ASSEMBLY_FILES)
 # %.o: uses implicit Makefile rule
 
 ####
+# Compile C++ object & assembly files
+####
+
+CPP_SOURCES := $(wildcard $(SRC)/**/*.cpp)
+CPP_OBJFILES := $(patsubst %.cpp,%.o,$(CPP_SOURCES))
+CPP_ASSEMBLY_FILES := $(patsubst %.cpp,%.s,$(CPP_SOURCES))
+
+%.s: %.cpp
+	$(CC) -S -fverbose-asm $(CFLAGS) "$^" -o "$@"
+
+$(info $(CPP_OBJFILES))
+$(info $(CPP_ASSEMBLY_FILES))
+compile: $(CPP_OBJFILES) $(CPP_ASSEMBLY_FILES)
+
+# %.o: uses implicit Makefile rule
+
+####
 # Link object files to executables
 ####
 
@@ -71,7 +92,7 @@ MAIN_ELF_D_FILES := $(patsubst %,%main.elf.d,$(BUILD_DIRS))
 link: $(MAIN_ELF_FILES) $(MAIN_ELF_D_FILES)
 
 $(BUILD)/%/main.elf: $(SRC)/%/*.o
-	@echo "Linking $^ to $@"
+	@echo "Linking" $^ "to" $@
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o "$@"
 #	$(TARGET)-readelf --all "$@"
 
