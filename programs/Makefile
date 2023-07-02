@@ -4,7 +4,7 @@ RUNTIMES := ./runtimes
 BUILD := ./build
 
 CPU_NAME ?= cpu-v0_1
-MAIN_PROGRAM ?= fibonacci
+MAIN_PROGRAM ?= display_hello
 
 TARGET := riscv64-unknown-elf
 LOADER_SCRIPT := $(LOADERS)/$(CPU_NAME).ld

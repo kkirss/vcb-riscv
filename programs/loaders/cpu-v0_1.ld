@@ -6,8 +6,9 @@ ENTRY(_start)
 MEMORY
 {
   NOP_START (r) : ORIGIN = 0x0, LENGTH = 0x4
-  TEXT (rx) : ORIGIN = 0x4, LENGTH = (0x8000 - 0x4)
-  DATA (rwx) : ORIGIN = 0x8000, LENGTH = 0x8000
+  TEXT (rx) : ORIGIN = 0x4, LENGTH = (0x100000 - 0x4)
+  DISPLAY_ADDR (rw) : ORIGIN = 0x100000, LENGTH = 0x4
+  DATA (rwx) : ORIGIN = (0x100000 + 0x4), LENGTH = 0x100000
 }
 
 SECTIONS
@@ -23,6 +24,12 @@ SECTIONS
     .text : {
         *(.text);
     } > TEXT
+
+    . = ORIGIN(DISPLAY_ADDR);
+
+    .display_addr : {
+        LONG(0x0);
+    } > DISPLAY_ADDR
 
     . = ORIGIN(DATA);
 
