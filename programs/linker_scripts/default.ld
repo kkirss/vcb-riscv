@@ -1,3 +1,5 @@
+# Parts taken from: https://github.com/syntacore/sc-bl/blob/master/common/scbl.ld
+
 OUTPUT_FORMAT("elf32-littleriscv", "elf32-littleriscv", "elf32-littleriscv")
 OUTPUT_ARCH(riscv)
 
