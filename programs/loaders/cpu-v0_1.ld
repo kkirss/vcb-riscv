@@ -9,6 +9,8 @@ MEMORY
     RAM (rwx) : ORIGIN = 0x4, LENGTH = 4096K - 0x4
 }
 
+STACK_SIZE = 4K;
+
 SEC_ALIGN = 32;
 
 SECTIONS
@@ -44,5 +46,13 @@ SECTIONS
 
     .bss ALIGN(SEC_ALIGN) : {
         *(.bss .bss.*);
+    } > RAM
+
+    .stack ORIGIN(RAM) + LENGTH(RAM) - STACK_SIZE : {
+        FILL(0);
+        PROVIDE(__STACK_START__ = .);
+        . += STACK_SIZE;
+        PROVIDE(__C_STACK_TOP__ = .);
+        PROVIDE(__STACK_END__ = .);
     } > RAM
 }

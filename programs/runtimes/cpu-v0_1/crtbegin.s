@@ -4,10 +4,10 @@
 .global _start
 .type _start,@function
 
-# init stack pointer to 4M - 16
+# init stack pointer
 # jump to call_main_handler
 _start:
-	li sp, 0x3FFFF0
+	la sp, __C_STACK_TOP__
 	j call_main_handler
 
 # jump to main program
