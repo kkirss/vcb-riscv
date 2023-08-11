@@ -29,8 +29,8 @@ CXXFLAGS := $(CFLAGS)
 
 LDFLAGS += -D__riscv_ $(RUNTIME_ASSEMBLY)
 
-.PHONY: all clean build_dirs assembly_files object_files link vcb_vmem vcb_main_program
-all: clean build_dirs assembly_files object_files link vcb_vmem vcb_main_program
+.PHONY: all clean build_dirs assembly_files object_files link disassemble vcb_vmem vcb_main_program
+all: clean build_dirs assembly_files object_files link disassemble vcb_vmem vcb_main_program
 
 ####
 # Create build directories
@@ -88,14 +88,20 @@ assembly_files: $(CPP_ASSEMBLY_FILES)
 ####
 
 MAIN_ELF_FILES := $(patsubst %,%main.elf,$(BUILD_DIRS))
-MAIN_ELF_D_FILES := $(patsubst %,%main.elf.d,$(BUILD_DIRS))
 
-link: $(MAIN_ELF_FILES) $(MAIN_ELF_D_FILES)
+link: $(MAIN_ELF_FILES)
 
 $(BUILD)/%/main.elf: $(SRC)/%/*.o
 	@echo "Linking" $^ "to" $@
 	$(CC) $(CFLAGS) $(LDFLAGS) $^ $(LDLIBS) -o "$@"
 #	$(TARGET)-readelf --all "$@"
+
+####
+# Disassemble executables
+####
+
+MAIN_ELF_D_FILES := $(patsubst %,%main.elf.d,$(BUILD_DIRS))
+disassemble: $(MAIN_ELF_D_FILES)
 
 %.elf.d: %.elf
 	$(TARGET)-objdump --disassemble "$^" > "$@"
