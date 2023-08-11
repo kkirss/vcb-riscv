@@ -18,7 +18,6 @@ CFLAGS += -march=rv32i
 CFLAGS += -mstrict-align
 CFLAGS += -mbranch-cost=2
 CFLAGS += -mtune=size
-CFLAGS += -nostartfiles
 CFLAGS += -T $(LOADER_SCRIPT)
 CFLAGS += -MD -MP
 # Verbose logging
@@ -28,6 +27,7 @@ CFLAGS += -MD -MP
 CXX := $(TARGET)-g++
 CXXFLAGS := $(CFLAGS)
 
+LDFLAGS += -nostartfiles
 LDFLAGS += -D__riscv_ $(RUNTIME_ASSEMBLY)
 
 .DEFAULT_GOAL: all
