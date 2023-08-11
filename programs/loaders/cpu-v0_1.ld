@@ -3,12 +3,12 @@ OUTPUT_ARCH(riscv)
 
 ENTRY(_start)
 
+RAM_SIZE = DEFINED( RAM_SIZE ) ? RAM_SIZE : 4096K;
 STACK_SIZE = DEFINED( STACK_SIZE ) ? STACK_SIZE : 4K;
 
 MEMORY
 {
-    /* 4096K bytes is max size of VMEM (20 bit address of 32-bit word -> 2^20 * (32/8) = 4096K) */
-    RAM (rwx) : ORIGIN = 0x4, LENGTH = 4096K - 0x4
+    RAM (rwx) : ORIGIN = 0x4, LENGTH = RAM_SIZE - 0x4
 }
 
 SEC_ALIGN = 32;

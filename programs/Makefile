@@ -10,6 +10,8 @@ TARGET := riscv64-unknown-elf
 LOADER_SCRIPT := $(LOADERS)/$(CPU_NAME).ld
 RUNTIME_ASSEMBLY := $(RUNTIMES)/$(CPU_NAME)/crtbegin.s
 
+# 4096K bytes is max size of VMEM (20 bit address of 32-bit word -> 2^20 * (32/8) = 4096K)
+RAM_SIZE := 4096K
 STACK_SIZE := 4K
 
 CC := $(TARGET)-g++
@@ -32,6 +34,7 @@ CXXFLAGS := $(CFLAGS)
 
 LDFLAGS += -nostartfiles
 LDFLAGS += -D__riscv_ $(RUNTIME_ASSEMBLY)
+LDFLAGS += -Wl,--defsym=RAM_SIZE=$(RAM_SIZE)
 LDFLAGS += -Wl,--defsym=STACK_SIZE=$(STACK_SIZE)
 
 .DEFAULT_GOAL: all
