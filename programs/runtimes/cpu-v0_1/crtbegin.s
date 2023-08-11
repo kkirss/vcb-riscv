@@ -1,11 +1,12 @@
 # Copied from https:#github.com/ChrisShakkour/RV32I-MAF-project/blob/main/scripts/crt0/crt0.S
 
 .section .text
+.global _start
+.type _start,@function
 
 # init stack pointer to 4M - 16
 # jump to call_main_handler
 _start:
-	.global _start
 	li sp, 0x3FFFF0
 	j call_main_handler
 
