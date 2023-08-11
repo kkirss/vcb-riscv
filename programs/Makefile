@@ -10,6 +10,8 @@ TARGET := riscv64-unknown-elf
 LOADER_SCRIPT := $(LOADERS)/$(CPU_NAME).ld
 RUNTIME_ASSEMBLY := $(RUNTIMES)/$(CPU_NAME)/crtbegin.s
 
+STACK_SIZE := 4K
+
 CC := $(TARGET)-g++
 CFLAGS += -O1
 CFLAGS += -mabi=ilp32
@@ -30,6 +32,7 @@ CXXFLAGS := $(CFLAGS)
 
 LDFLAGS += -nostartfiles
 LDFLAGS += -D__riscv_ $(RUNTIME_ASSEMBLY)
+LDFLAGS += -Wl,--defsym=STACK_SIZE=$(STACK_SIZE)
 
 .DEFAULT_GOAL: all
 .PHONY: all clean build_dirs assembly_files object_files link disassemble vcb_vmem vcb_main_program
