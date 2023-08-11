@@ -15,6 +15,11 @@ SECTIONS
 {
     . = ORIGIN(RAM);
 
+    .init :
+    {
+        KEEP (*(SORT_NONE(.init)))
+    } > RAM
+
     .text : {
         *(.text);
     } > RAM

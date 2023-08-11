@@ -1,6 +1,6 @@
 # Copied from https:#github.com/ChrisShakkour/RV32I-MAF-project/blob/main/scripts/crt0/crt0.S
 
-.section .text
+.section .init
 .global _start
 .type _start,@function
 
