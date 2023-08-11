@@ -22,6 +22,7 @@ CFLAGS += -nostartfiles
 CFLAGS += -T $(LOADER_SCRIPT)
 CFLAGS += -MD -MP
 # Verbose logging
+#CFLAGS += --verbose
 #CFLAGS += -Wl,--verbose
 
 CXX := $(TARGET)-g++
