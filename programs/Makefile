@@ -35,6 +35,7 @@ CXX := $(TARGET)-g++
 CXXFLAGS := $(CFLAGS)
 
 LDFLAGS += -nostartfiles
+LDFLAGS += -static
 LDFLAGS += -D__riscv_ $(INIT_ASSEMBLY)
 LDFLAGS += -Wl,--defsym=RAM_SIZE=$(RAM_SIZE)
 LDFLAGS += -Wl,--defsym=STACK_SIZE=$(STACK_SIZE)
