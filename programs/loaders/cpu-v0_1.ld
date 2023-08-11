@@ -12,6 +12,7 @@ MEMORY
 }
 
 SEC_ALIGN = 32;
+STACK_PAD = 16;
 
 SECTIONS
 {
@@ -51,8 +52,9 @@ SECTIONS
     .stack ORIGIN(RAM) + LENGTH(RAM) - STACK_SIZE : {
         FILL(0);
         PROVIDE(__STACK_START__ = .);
-        . += STACK_SIZE;
+        . += (STACK_SIZE - STACK_PAD);
         PROVIDE(__C_STACK_TOP__ = .);
         PROVIDE(__STACK_END__ = .);
+        . += STACK_PAD;
     } > RAM
 }
