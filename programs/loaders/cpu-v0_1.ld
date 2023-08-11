@@ -21,22 +21,22 @@ SECTIONS
     } > RAM
 
     .text : {
-        *(.text);
+        *(.text .text.*);
     } > RAM
 
     .rodata ALIGN(SEC_ALIGN) : {
-        *(.srodata);
-        *(.rodata);
-        *(.rdata);
+        *(.srodata .srodata.*);
+        *(.rodata .rodata.*);
+        *(.rdata .rdata.*);
     } > RAM
 
     .data ALIGN(SEC_ALIGN) : {
-        *(.sdata);
-        *(.data);
+        *(.sdata .sdata.*);
+        *(.data .data.*);
     } > RAM
 
     .bss ALIGN(SEC_ALIGN) : {
-        *(.sbss);
-        *(.bss);
+        *(.sbss .sbss.*);
+        *(.bss .bss.*);
     } > RAM
 }
