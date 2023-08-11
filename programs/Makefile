@@ -17,7 +17,7 @@ STACK_SIZE := 4K
 CC := $(TARGET)-g++
 CFLAGS += -O1
 CFLAGS += -mabi=ilp32
-CFLAGS += -misa-spec=2.2
+CFLAGS += -misa-spec=20191213
 CFLAGS += -march=rv32i
 CFLAGS += -mstrict-align
 CFLAGS += -mbranch-cost=2
