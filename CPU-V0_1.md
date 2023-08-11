@@ -90,3 +90,12 @@ All multiplexers required:
 * MEM-OUT-SRC
   * 1: load-data
   * 0: ex-out-data
+
+### Pipeline
+
+The CPU pipeline consists of 5 stages:
+* IF: Instruction Fetch
+* ID: Instruction Decode
+* EX: Execute
+* MEM: Memory
+* WB: Write Back
