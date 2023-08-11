@@ -30,6 +30,7 @@ CXXFLAGS := $(CFLAGS)
 
 LDFLAGS += -D__riscv_ $(RUNTIME_ASSEMBLY)
 
+.DEFAULT_GOAL: all
 .PHONY: all clean build_dirs assembly_files object_files link disassemble vcb_vmem vcb_main_program
 all: clean build_dirs assembly_files object_files link disassemble vcb_vmem vcb_main_program ## Run all of the steps below
 
@@ -152,7 +153,6 @@ C_STEP := $(C_BLUE)
 C_END := \033[0m
 LONGEST_TARGET_LEN := $(shell grep -h -E '^[a-zA-Z_-]+:.*?## .*$$' $(MAKEFILE_LIST) | awk 'BEGIN {FS = ":.*?## "}; {printf "%s\n", $$1}' | awk '!len || length($1) > len {len=length($1)} END{print len}')
 
-.DEFAULT_GOAL := help
 .PHONY: help
 help: ## Print this help message
 	@echo "Usage: make $(C_STEP)<target>$(C_END)"
