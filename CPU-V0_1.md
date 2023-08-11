@@ -60,3 +60,33 @@ Huge thanks to you 🙂
 ## Community
 
 There's [a thread about this project in the VCB Discord community](https://discord.com/channels/937059867615694889/1087508766020349992/1087508766020349992)
+
+## Technical Details
+
+### Multiplexers
+
+All multiplexers required:
+* PC-SRC
+  * 1: j-target
+  * 0: PC+4
+* ALU-I2-SRC
+  * 11: EX-OUT-DATA
+  * 10: WRITE-DATA
+  * 01: imm
+  * 00: r2
+* ALU-I1-SRC
+  * 11: EX-OUT-DATA
+  * 10: WRITE-DATA
+  * 01: -
+  * 00: r1
+* J-TARGET-SRC:
+  * 1: PC+imm
+  * 2: alu-out
+* EX-OUT-SRC:
+  * 11: PC+imm
+  * 10: PC+4
+  * 01: imm
+  * 00: alu-out
+* MEM-OUT-SRC
+  * 1: load-data
+  * 0: ex-out-data

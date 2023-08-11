@@ -16,9 +16,9 @@ It includes labels for everything and should be relatively straight-forward to u
 
 ## CPU
 
-There is a VCB file for a RISC-V CPU. (In the future, multiple versions.)
+There is a VCB file for a RISC-V CPU - `cpu-v0_1.vcb`.
 
-See [CPU-V0_1](CPU-V0_1.md) for more details. 
+See [CPU-V0_1.md](CPU-V0_1.md) for more details. 
 
 ## Programs
 
