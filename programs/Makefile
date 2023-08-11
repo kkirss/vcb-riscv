@@ -30,9 +30,6 @@ CFLAGS += -mtune=size
 CFLAGS += -T $(LINKER_SCRIPT)
 # Used to generate dependency files (.d)
 CFLAGS += -MD -MP
-# Verbose logging
-#CFLAGS += --verbose
-#CFLAGS += -Wl,--verbose
 
 CXX := $(TARGET)-g++
 CXXFLAGS := $(CFLAGS)
@@ -42,6 +39,11 @@ LDFLAGS += -D__riscv_ $(INIT_ASSEMBLY)
 LDFLAGS += -Wl,--defsym=RAM_SIZE=$(RAM_SIZE)
 LDFLAGS += -Wl,--defsym=STACK_SIZE=$(STACK_SIZE)
 LDFLAGS += -Wl,--gc-sections
+
+# Verbose logging
+#CFLAGS += --verbose
+#CFLAGS += -Wl,--verbose
+#LDFLAGS += -Wl,--print-gc-sections
 
 .DEFAULT_GOAL: all
 .PHONY: all clean build_dirs assembly_files object_files link disassemble vcb_vmem vcb_main_program
