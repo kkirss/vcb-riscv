@@ -5,49 +5,33 @@ ENTRY(_start)
 
 MEMORY
 {
-  NOP_START (r) : ORIGIN = 0x0, LENGTH = 0x4
-  TEXT (rx) : ORIGIN = 0x4, LENGTH = (0x100000 - 0x4)
-  DISPLAY_ADDR (rw) : ORIGIN = 0x100000, LENGTH = 0x4
-  DATA (rwx) : ORIGIN = (0x100000 + 0x4), LENGTH = 0x100000
+    /* 4096K bytes is max size of VMEM (20 bit address of 32-bit word -> 2^20 * (32/8) = 4096K) */
+    RAM (rwx) : ORIGIN = 0x4, LENGTH = 4096K - 0x4
 }
+
+SEC_ALIGN = 32;
 
 SECTIONS
 {
-    . = ORIGIN(NOP_START);
-
-    .nop_start : {
-        LONG(0x0);
-    } > NOP_START
-
-    . = ORIGIN(TEXT);
+    . = ORIGIN(RAM);
 
     .text : {
         *(.text);
-    } > TEXT
+    } > RAM
 
-    . = ORIGIN(DISPLAY_ADDR);
-
-    .display_addr : {
-        LONG(0x0);
-    } > DISPLAY_ADDR
-
-    . = ORIGIN(DATA);
-
-    .rodata : {
+    .rodata ALIGN(SEC_ALIGN) : {
         *(.srodata);
         *(.rodata);
         *(.rdata);
-    } > DATA
+    } > RAM
 
-    . = ALIGN(32 / 8);
-    .data : {
+    .data ALIGN(SEC_ALIGN) : {
         *(.sdata);
         *(.data);
-    } > DATA
+    } > RAM
 
-    . = ALIGN(32 / 8);
-    .bss : {
+    .bss ALIGN(SEC_ALIGN) : {
         *(.sbss);
         *(.bss);
-    } > DATA
+    } > RAM
 }

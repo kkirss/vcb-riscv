@@ -1,7 +1,6 @@
 
 const unsigned int WORD_SIZE = 32;
 
-// Defined in cpu-v_1.ld as DISPLAY_ADDR
 // TODO: Make this more dynamic/portable
 const unsigned int FRAME_BUFFER_POINTER_ADDR = 0x200000 * (8 / WORD_SIZE);
 
