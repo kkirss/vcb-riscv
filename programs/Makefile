@@ -36,6 +36,7 @@ LDFLAGS += -nostartfiles
 LDFLAGS += -D__riscv_ $(RUNTIME_ASSEMBLY)
 LDFLAGS += -Wl,--defsym=RAM_SIZE=$(RAM_SIZE)
 LDFLAGS += -Wl,--defsym=STACK_SIZE=$(STACK_SIZE)
+LDFLAGS += -Wl,--gc-sections
 
 .DEFAULT_GOAL: all
 .PHONY: all clean build_dirs assembly_files object_files link disassemble vcb_vmem vcb_main_program
