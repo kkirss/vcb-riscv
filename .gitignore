@@ -7,8 +7,8 @@ data/
 programs/build
 .env
 
-*.o
-*.d
-*.s
+/programs/src/**/*.o
+/programs/src/**/*.d
+/programs/src/**/*.s
 *.vcbmem
 *.backup

@@ -1,18 +1,23 @@
 SRC := ./src
-LOADERS := ./loaders
-RUNTIMES := ./runtimes
+LINKER_SCRIPTS := ./linker_scripts
+INIT_ASSEMBLIES := ./init_assemblies
 BUILD := ./build
 
 CPU_NAME ?= cpu-v0_1
 MAIN_PROGRAM ?= display_hello
 
-TARGET := riscv64-unknown-elf
-LOADER_SCRIPT := $(LOADERS)/$(CPU_NAME).ld
-RUNTIME_ASSEMBLY := $(RUNTIMES)/$(CPU_NAME)/crtbegin.s
-
-# 4096K bytes is max size of VMEM (20 bit address of 32-bit word -> 2^20 * (32/8) = 4096K)
-RAM_SIZE := 4096K
+RAM_SIZE := 4096K # 4096K bytes is max size of VMEM (20 bit address of 32-bit word -> 2^20 * (32/8) = 4096K)
 STACK_SIZE := 4K
+
+TARGET := riscv64-unknown-elf
+
+LINKER_SCRIPT_FILE := $(LINKER_SCRIPTS)/$(CPU_NAME).ld
+LINKER_SCRIPT_DEFAULT := $(LINKER_SCRIPTS)/default.ld
+LINKER_SCRIPT := $(if $(wildcard $(LINKER_SCRIPT_FILE)),$(LINKER_SCRIPT_FILE),$(LINKER_SCRIPT_DEFAULT))
+
+INIT_ASSEMBLY_FILE := $(INIT_ASSEMBLIES)/$(CPU_NAME).s
+INIT_ASSEMBLY_DEFAULT := $(INIT_ASSEMBLIES)/default.s
+INIT_ASSEMBLY := $(if $(wildcard $(INIT_ASSEMBLY_FILE)),$(INIT_ASSEMBLY_FILE),$(INIT_ASSEMBLY_DEFAULT))
 
 CC := $(TARGET)-g++
 CFLAGS += -O1
@@ -22,7 +27,7 @@ CFLAGS += -march=rv32i
 CFLAGS += -mstrict-align
 CFLAGS += -mbranch-cost=2
 CFLAGS += -mtune=size
-CFLAGS += -T $(LOADER_SCRIPT)
+CFLAGS += -T $(LINKER_SCRIPT)
 # Used to generate dependency files (.d)
 CFLAGS += -MD -MP
 # Verbose logging
@@ -33,7 +38,7 @@ CXX := $(TARGET)-g++
 CXXFLAGS := $(CFLAGS)
 
 LDFLAGS += -nostartfiles
-LDFLAGS += -D__riscv_ $(RUNTIME_ASSEMBLY)
+LDFLAGS += -D__riscv_ $(INIT_ASSEMBLY)
 LDFLAGS += -Wl,--defsym=RAM_SIZE=$(RAM_SIZE)
 LDFLAGS += -Wl,--defsym=STACK_SIZE=$(STACK_SIZE)
 LDFLAGS += -Wl,--gc-sections
