@@ -19,6 +19,7 @@ CFLAGS += -mstrict-align
 CFLAGS += -mbranch-cost=2
 CFLAGS += -mtune=size
 CFLAGS += -T $(LOADER_SCRIPT)
+# Used to generate dependency files (.d)
 CFLAGS += -MD -MP
 # Verbose logging
 #CFLAGS += --verbose
