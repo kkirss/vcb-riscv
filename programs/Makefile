@@ -29,7 +29,7 @@ CXXFLAGS := $(CFLAGS)
 
 LDFLAGS += -D__riscv_ $(RUNTIME_ASSEMBLY)
 
-.PHONY: all
+.PHONY: all clean build_dirs assembly_files object_files link vcb_vmem vcb_main_program
 all: clean build_dirs assembly_files object_files link vcb_vmem vcb_main_program
 
 ####
@@ -39,7 +39,6 @@ all: clean build_dirs assembly_files object_files link vcb_vmem vcb_main_program
 SOURCE_DIRS := $(wildcard $(SRC)/**/)
 BUILD_DIRS := $(patsubst $(SRC)%,$(BUILD)%,$(SOURCE_DIRS))
 
-.PHONY: build_dirs
 build_dirs: $(BUILD) $(BUILD_DIRS)
 
 $(BUILD)/%/:
@@ -56,13 +55,11 @@ C_SOURCES := $(wildcard $(SRC)/**/*.c)
 C_OBJECT_FILES := $(patsubst %.c,%.o,$(C_SOURCES))
 C_ASSEMBLY_FILES := $(patsubst %.c,%.s,$(C_SOURCES))
 
-.PHONY: object_files
 object_files: $(C_OBJECT_FILES)
 
 # %.o:
 #	(uses implicit Makefile rule)
 
-.PHONY: assembly_files
 assembly_files: $(C_ASSEMBLY_FILES)
 
 %.s: %.c
@@ -93,7 +90,6 @@ assembly_files: $(CPP_ASSEMBLY_FILES)
 MAIN_ELF_FILES := $(patsubst %,%main.elf,$(BUILD_DIRS))
 MAIN_ELF_D_FILES := $(patsubst %,%main.elf.d,$(BUILD_DIRS))
 
-.PHONY: link
 link: $(MAIN_ELF_FILES) $(MAIN_ELF_D_FILES)
 
 $(BUILD)/%/main.elf: $(SRC)/%/*.o
@@ -110,7 +106,6 @@ $(BUILD)/%/main.elf: $(SRC)/%/*.o
 
 VCB_VMEM_FILES := $(patsubst %,%main.vcbmem,$(BUILD_DIRS))
 
-.PHONY: vcb_vmem
 vcb_vmem: $(VCB_VMEM_FILES)
 
 %.bin: %.elf
@@ -126,7 +121,6 @@ vcb_vmem: $(VCB_VMEM_FILES)
 # Copy main program VCB VMEM file
 ####
 
-.PHONY: vcb_main_program
 vcb_main_program: $(BUILD)/$(CPU_NAME).vcbmem
 
 $(BUILD)/$(CPU_NAME).vcbmem: $(BUILD)/$(MAIN_PROGRAM)/main.vcbmem
@@ -136,7 +130,6 @@ $(BUILD)/$(CPU_NAME).vcbmem: $(BUILD)/$(MAIN_PROGRAM)/main.vcbmem
 # Clean built files
 ####
 
-.PHONY: clean
 clean:
 	@echo "Cleaning up..."
 	rm -rf $(BUILD)
