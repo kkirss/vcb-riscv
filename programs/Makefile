@@ -30,7 +30,7 @@ CXXFLAGS := $(CFLAGS)
 LDFLAGS += -D__riscv_ $(RUNTIME_ASSEMBLY)
 
 .PHONY: all
-all: clean build_dirs compile link vcb_vmem vcb_main_program
+all: clean build_dirs assembly_files object_files link vcb_vmem vcb_main_program
 
 ####
 # Create build directories
@@ -53,33 +53,38 @@ $(BUILD):
 ####
 
 C_SOURCES := $(wildcard $(SRC)/**/*.c)
-C_OBJFILES := $(patsubst %.c,%.o,$(C_SOURCES))
+C_OBJECT_FILES := $(patsubst %.c,%.o,$(C_SOURCES))
 C_ASSEMBLY_FILES := $(patsubst %.c,%.s,$(C_SOURCES))
 
-.PHONY: compile
-compile: $(C_OBJFILES) $(C_ASSEMBLY_FILES)
+.PHONY: object_files
+object_files: $(C_OBJECT_FILES)
+
+# %.o:
+#	(uses implicit Makefile rule)
+
+.PHONY: assembly_files
+assembly_files: $(C_ASSEMBLY_FILES)
 
 %.s: %.c
 	$(CC) -S -fverbose-asm $(CFLAGS) "$^" -o "$@"
-
-# %.o: uses implicit Makefile rule
 
 ####
 # Compile C++ object & assembly files
 ####
 
 CPP_SOURCES := $(wildcard $(SRC)/**/*.cpp)
-CPP_OBJFILES := $(patsubst %.cpp,%.o,$(CPP_SOURCES))
+CPP_OBJECT_FILES := $(patsubst %.cpp,%.o,$(CPP_SOURCES))
 CPP_ASSEMBLY_FILES := $(patsubst %.cpp,%.s,$(CPP_SOURCES))
+
+object_files: $(CPP_OBJECT_FILES) $(CPP_ASSEMBLY_FILES)
+
+# %.o:
+#	(uses implicit Makefile rule)
+
+assembly_files: $(CPP_ASSEMBLY_FILES)
 
 %.s: %.cpp
 	$(CC) -S -fverbose-asm $(CFLAGS) "$^" -o "$@"
-
-$(info $(CPP_OBJFILES))
-$(info $(CPP_ASSEMBLY_FILES))
-compile: $(CPP_OBJFILES) $(CPP_ASSEMBLY_FILES)
-
-# %.o: uses implicit Makefile rule
 
 ####
 # Link object files to executables
