@@ -31,12 +31,18 @@ SECTIONS
     } > RAM
 
     .data ALIGN(SEC_ALIGN) : {
-        *(.sdata .sdata.*);
         *(.data .data.*);
     } > RAM
 
-    .bss ALIGN(SEC_ALIGN) : {
+    .sdata ALIGN(SEC_ALIGN) : {
+        *(.sdata .sdata.*);
+    } > RAM
+
+    .sbss ALIGN(SEC_ALIGN) : {
         *(.sbss .sbss.*);
+    } > RAM
+
+    .bss ALIGN(SEC_ALIGN) : {
         *(.bss .bss.*);
     } > RAM
 }
