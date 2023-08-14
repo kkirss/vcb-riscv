@@ -8,6 +8,7 @@ MAIN_PROGRAM ?= display_hello
 
 RAM_SIZE := 4096K # 4096K bytes is max size of VMEM (20 bit address of 32-bit word -> 2^20 * (32/8) = 4096K)
 STACK_SIZE := 4K
+STACK_TOP := 0x300000
 
 TARGET := riscv64-unknown-elf
 
@@ -39,6 +40,7 @@ LDFLAGS += -static
 LDFLAGS += -D__riscv_ $(INIT_ASSEMBLY)
 LDFLAGS += -Wl,--defsym=RAM_SIZE=$(RAM_SIZE)
 LDFLAGS += -Wl,--defsym=STACK_SIZE=$(STACK_SIZE)
+LDFLAGS += -Wl,--defsym=STACK_TOP=$(STACK_TOP)
 LDFLAGS += -Wl,--gc-sections
 
 # Verbose logging

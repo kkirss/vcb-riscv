@@ -13,6 +13,8 @@ MEMORY
     RAM (rwx) : ORIGIN = 0x0, LENGTH = RAM_SIZE
 }
 
+STACK_TOP = DEFINED( STACK_TOP ) ? STACK_TOP : ORIGIN(RAM) + LENGTH(RAM);
+
 SEC_ALIGN = 32;
 STACK_PAD = 16;
 
@@ -51,7 +53,7 @@ SECTIONS
         *(.bss .bss.*);
     } > RAM
 
-    .stack ORIGIN(RAM) + LENGTH(RAM) - STACK_SIZE : {
+    .stack STACK_TOP - STACK_SIZE : {
         FILL(0);
         PROVIDE(__STACK_START__ = .);
         . += (STACK_SIZE - STACK_PAD);
