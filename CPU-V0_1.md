@@ -105,11 +105,10 @@ The CPU pipeline consists of 5 stages:
 ##### Inputs
 
 Input signals:
-* I1
+* R1
   * RS1==PC-1-RD -> Previous instruction 'may write to RS1'
   * PC-2-WRITE-RS-1 = (RS1==PC-2-RD && PC-2-REG-WRITE) -> Second before instruction 'writes to RS1'
-* I2
-  * ALU-I2-IMM -> I2 'is an immediate value'
+* R2
   * RS2==PC-1-RD -> Previous instruction 'may write to RS2'
   * PC-2-WRITE-RS-2 = (RS2==PC-2-RD && PC-2-REG-WRITE) -> Second before instruction 'writes to RS2'
 * Both
@@ -127,18 +126,18 @@ if (PC-1-MEM-LOAD) {
 ##### Outputs
 
 Hazard control signals:
-* I1, one of:
-  * I1-EX-STALL
-  * ALU-I1-SRC-PC-1
-  * ALU-I1-SRC-PC-2
-  * ALU-I1-SRC-r1
-* I2, one of:
-  * I2-EX-STALL
-  * ALU-I2-SRC-PC-1
-  * ALU-I2-SRC-PC-2
-  * ALU-I2-SRC-imm
-  * ALU-I2-SRC-r2
-* EX-STALL = (I1-EX-STALL || I2-EX-STALL), sets all of:
+* R1, one of:
+  * R1-EX-STALL
+  * R1-SRC-PC-1
+  * R1-SRC-PC-2
+  * R2-SRC-REG
+* R2, one of:
+  * R2-EX-STALL
+  * R2-SRC-PC-1
+  * R2-SRC-PC-2
+  * R2-SRC-imm
+  * R2-SRC-REG
+* EX-STALL = (R1-EX-STALL || R2-EX-STALL), sets all of:
   * IF-STALL
   * ID-STALL
   * EX-STALL
@@ -146,55 +145,48 @@ Hazard control signals:
 
 ##### Logic
 
-I1 logic:
+R1 logic:
 ```
 if (RS1==PC-1-RD) { // Previous instruction 'may write to RS1'
   if (PC-1-REG-WRITE) { // Previous instruction 'writes to RS1'
     if (PC-1-MEM-LOAD) { // Previous instruction 'loads from memory' -> stall, not available yet
       set UNTIL-EX-STALL;
-    } else { // Previous instruction 'calculates in EX stage' -> get I1 from MEM pipeline register
-      set ALU-I1-SRC-PC-1;
+    } else { // Previous instruction 'calculates in EX stage' -> get R1 from MEM pipeline register
+      set R1-SRC-PC-1;
     }
   }
-  if (RS1==PC-2-RD && PC-2-REG-WRITE) { // Second before instruction 'writes to RS1' -> get I1 from MEM pipeline register
-    set ALU-I1-SRC-PC-2;
-  } else { // Second before instruction 'doesn't write to RS1' -> get I1 from register file
-    set ALU-I1-SRC-r1;
+  if (RS1==PC-2-RD && PC-2-REG-WRITE) { // Second before instruction 'writes to RS1' -> get R1 from MEM pipeline register
+    set R1-SRC-PC-2;
+  } else { // Second before instruction 'doesn't write to RS1' -> get R1 from register file
+    set R2-SRC-REG;
   }
 } else { // Previous instruction 'doesn't write to RS1''
-  if (RS1==PC-2-RD && PC-2-REG-WRITE) { // Second before instruction 'writes to RS1' -> get I1 from MEM pipeline register
-    set ALU-I1-SRC-PC-2;
-  } else { // Second before instruction 'doesn't write to RS1' -> get I1 from register file
-    set ALU-I1-SRC-r1;
+  if (RS1==PC-2-RD && PC-2-REG-WRITE) { // Second before instruction 'writes to RS1' -> get R1 from MEM pipeline register
+    set R1-SRC-PC-2;
+  } else { // Second before instruction 'doesn't write to RS1' -> get R1 from register file
+    set R2-SRC-REG;
   }
 }
 ```
 
-I1 truth table:
-| RS1==PC-1-RD | PC-1-REG-WRITE | PC-1-MEM-LOAD | PC-2-WRITE-RS-1 | OUT             |
-|--------------|----------------|---------------|-----------------|-----------------|
-| 0            | 0              | 0             | 0               | ALU-I1-SRC-r1   |
-| 0            | 0              | 0             | 1               | ALU-I1-SRC-PC-2 |
-| 0            | 0              | 1             | 0               | x               |
-| 0            | 0              | 1             | 1               | x               |
-| 0            | 1              | 0             | 0               | ALU-I1-SRC-r1   |
-| 0            | 1              | 0             | 1               | ALU-I1-SRC-PC-2 |
-| 0            | 1              | 1             | 0               | ALU-I1-SRC-r1   |
-| 0            | 1              | 1             | 1               | ALU-I1-SRC-PC-2 |
-| 1            | 0              | 0             | 0               | ALU-I1-SRC-r1   |
-| 1            | 0              | 0             | 1               | ALU-I1-SRC-PC-2 |
-| 1            | 0              | 1             | 0               | x               |
-| 1            | 0              | 1             | 1               | x               |
-| 1            | 1              | 0             | 0               | ALU-I1-SRC-PC-1 |
-| 1            | 1              | 0             | 1               | ALU-I1-SRC-PC-1 |
-| 1            | 1              | 1             | 0               | I1-EX-STALL     |
-| 1            | 1              | 1             | 1               | I1-EX-STALL     |
+R1 truth table:
+| RS1==PC-1-RD | PC-1-REG-WRITE | PC-1-MEM-LOAD | PC-2-WRITE-RS-1 | OUT          |
+|--------------|----------------|---------------|-----------------|--------------|
+| 0            | 0              | 0             | 0               | R2-SRC-REG   |
+| 0            | 0              | 0             | 1               | R1-SRC-PC-2  |
+| 0            | 0              | 1             | 0               | x            |
+| 0            | 0              | 1             | 1               | x            |
+| 0            | 1              | 0             | 0               | R2-SRC-REG   |
+| 0            | 1              | 0             | 1               | R1-SRC-PC-2  |
+| 0            | 1              | 1             | 0               | R2-SRC-REG   |
+| 0            | 1              | 1             | 1               | R1-SRC-PC-2  |
+| 1            | 0              | 0             | 0               | R2-SRC-REG   |
+| 1            | 0              | 0             | 1               | R1-SRC-PC-2  |
+| 1            | 0              | 1             | 0               | x            |
+| 1            | 0              | 1             | 1               | x            |
+| 1            | 1              | 0             | 0               | R1-SRC-PC-1  |
+| 1            | 1              | 0             | 1               | R1-SRC-PC-1  |
+| 1            | 1              | 1             | 0               | R1-EX-STALL  |
+| 1            | 1              | 1             | 1               | R1-EX-STALL  |
 
-I2 logic:
-```
-if (ALU-I2-IMM) { // I2 'is an immediate value' -> get I2 from immediate value
-  set ALU-I2-SRC-imm;
-} else { // I2 'is not an immediate value'
-  (same as I1)
-}
-```
+R2 logic is the same as R1.
