@@ -1,19 +1,42 @@
 #!/bin/bash
-echo "Creating /opt/riscv folder..."
-sudo mkdir /opt/riscv
-echo "Giving $USER ownership to the /opt/riscv folder..."
-sudo chown -R $USER:$USER /opt/riscv
+RISCV_PREFIX="/opt/riscv"
 
-echo "Installing riscv-gnu-toolchain dependencies for Ubuntu..."
-sudo apt-get install autoconf automake autotools-dev curl python3 libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev
+if [ -d "$RISCV_PREFIX" ]; then
+    echo "RISC-V toolchain found in $RISCV_PREFIX"
+else
+    echo "Creating $RISCV_PREFIX folder..."
+    sudo mkdir /opt/riscv
+    echo "Giving $USER ownership to the $RISCV_PREFIX folder..."
+    sudo chown -R $USER:$USER $RISCV_PREFIX
 
-cd ~
-echo "Cloning riscv-gnu-toolchain into ~/riscv-gnu-toolchain..."
-echo "Note: You can delete this folder after the script is finished"
-git clone https://github.com/riscv/riscv-gnu-toolchain
-echo "Compiling riscv-gnu-toolchain..."
-echo "Note: This will take ~1 hour"
-cd riscv-gnu-toolchain
-./configure --prefix=/opt/riscv --enable-multilib
-make
-echo "NB: Add /opt/riscv to your system PATH"
+    echo "Installing riscv-gnu-toolchain dependencies for Ubuntu..."
+    sudo apt-get install autoconf automake autotools-dev curl python3 libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev
+
+    RISCV_GNU_TOOLCHAIN_DIR="$HOME/riscv-gnu-toolchain"
+    echo "Cloning riscv-gnu-toolchain into $RISCV_GNU_TOOLCHAIN_DIR..."
+    echo "Note: You can delete this folder after the script is finished"
+    git clone https://github.com/riscv/riscv-gnu-toolchain "$RISCV_GNU_TOOLCHAIN_DIR"
+
+    echo "Compiling riscv-gnu-toolchain..."
+    echo "Note: This will take ~1 hour"
+    cd "$RISCV_GNU_TOOLCHAIN_DIR" || exit 1
+    ./configure --prefix="$RISCV_PREFIX" --enable-multilib
+    make
+fi
+
+echo "Checking if riscv-gnu-toolchain is installed..." # By running `riscv64-unknown-elf-gcc --version` and checking if it returns 0
+$RISCV_PREFIX/bin/riscv64-unknown-elf-gcc --version
+if [ $? -eq 0 ]; then
+    echo "riscv-gnu-toolchain was installed correctly"
+
+    riscv64-unknown-elf-gcc --version > /dev/null 2>&1
+    if [ $? -eq 0 ]; then
+        echo "riscv-gnu-toolchain is already in PATH"
+    else
+        echo "NB: Add $RISCV_PREFIX/bin to your system PATH"
+    fi
+else
+    echo "riscv-gnu-toolchain was not installed correctly"
+    echo "Exiting..."
+    exit 1
+fi
