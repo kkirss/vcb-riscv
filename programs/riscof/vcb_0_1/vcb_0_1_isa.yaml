@@ -1,0 +1,8 @@
+hart_ids: [0]
+hart0:
+  User_Spec_Version: '2.3'
+  ISA: RV32I
+  # TODO: Should this be 22 to denote VMEM size?
+  physical_addr_sz: 32
+  supported_xlen: [32]
+  hw_data_misaligned_support: False

@@ -10,5 +10,8 @@ programs/build
 /programs/src/**/*.o
 /programs/src/**/*.d
 /programs/src/**/*.s
+/programs/riscof/riscof_work
+/programs/riscof/riscv-arch-test
+/programs/riscof/riscv-plugins
 *.vcbmem
 *.backup

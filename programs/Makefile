@@ -163,6 +163,8 @@ clean: ## Clean up built files
 	rm -rf $(SRC)/**/*.d
 	rm -rf $(SRC)/**/*.s
 
+include ./riscof/riscof.mk
+
 ###
 # Print help message
 ###
