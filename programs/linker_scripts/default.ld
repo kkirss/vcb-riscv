@@ -22,9 +22,8 @@ SECTIONS
 {
     . = ORIGIN(RAM);
 
-    .init :
-    {
-        KEEP (*(SORT_NONE(.init)))
+    .text.init : {
+        KEEP (*(SORT_NONE(.text.init)))
     } > RAM
 
     .text : {
@@ -61,4 +60,6 @@ SECTIONS
         PROVIDE(__STACK_END__ = .);
         . += STACK_PAD;
     } > RAM
+
+    _end = .;
 }
