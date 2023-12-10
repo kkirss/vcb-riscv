@@ -15,7 +15,7 @@ def split_test_list(test_list_path: Path, test_output_folder: Path) -> None:
 
     for test_key, test_content in test_list.items():
         test_assembly_name = test_key.rsplit('/', 1)[-1]
-        test_name = test_assembly_name.split('-')[0]
+        test_name = test_assembly_name.rsplit('-', 1)[0]
         test_output_path = test_output_folder / f'{test_name}.yaml'
 
         with open(test_output_path, 'w') as f:
