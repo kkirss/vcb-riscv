@@ -197,14 +197,12 @@ The critical path is BRANCH instruction in the EX stage:
 1. 2 ticks to read register file
    * 1 tick concurrently for ALU input multiplexer inputs (for pipeline forwarding)
 2. 1 tick for ALU input multiplexers
-3. 11 ticks for ALU adder
+3. 5 ticks for ALU adder
 4. 1 tick for comparison logic from adder output
 5. 1 tick for comparison multiplexer
 6. 1 tick for checking whether EX stage should be flushed and splitting writes to pipeline stage control lines.
 7. 2 ticks for PC-SRC multiplexer
    * 1 tick concurrently for pipeline stage clock controller
-8. 2 ticks for pipeline stage store
-9. -2 ticks for ???
-   * The CPU seems to work faster but not sure why.
+8. 1 tick for pipeline stage store
 
-Total: 19 ticks
+Total: 14 ticks
