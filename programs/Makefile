@@ -30,6 +30,8 @@ CFLAGS += -mstrict-align
 CFLAGS += -mbranch-cost=2
 CFLAGS += -mtune=size
 CFLAGS += -T $(LINKER_SCRIPT)
+# Include debug symbols (can be used to add source code annotation to disassembly)
+CFLAGS += -g
 # Used to generate dependency files (.d)
 CFLAGS += -MD -MP
 
@@ -126,7 +128,8 @@ MAIN_ELF_D_FILES := $(patsubst %,%main.elf.d,$(BUILD_DIRS))
 disassemble: $(MAIN_ELF_D_FILES) ## Disassemble executable files (.elf.d)
 
 %.elf.d: %.elf
-	$(TARGET)-objdump --disassemble "$^" > "$@"
+	#$(TARGET)-objdump --disassemble "$^" > "$@"
+	$(TARGET)-objdump --disassemble --source "$^" > "$@"
 
 ####
 # VCB VMEM conversion
