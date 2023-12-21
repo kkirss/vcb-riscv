@@ -52,7 +52,7 @@ LDFLAGS += -Wl,--gc-sections
 
 .DEFAULT_GOAL: all
 .PHONY: all clean build_dirs assembly_files object_files link disassemble vcb_vmem vcb_main_program
-all: clean build_dirs assembly_files object_files link disassemble vcb_vmem vcb_main_program ## Run all of the steps below
+all: build_dirs assembly_files object_files link disassemble vcb_vmem vcb_main_program ## Run all of the steps below
 
 ####
 # Create build directories
