@@ -143,7 +143,7 @@ vcb_vmem: $(VCB_VMEM_FILES) ## Convert executable files to VCB VMEM files (.vcbm
 # So we need to swap the endianness for the .vcbmem file
 %.vcbmem: %.bin
 	$(TARGET)-objcopy -I binary -O binary --reverse-bytes=4 "$^" "$@"
-	hexdump -C "$@"
+	#hexdump -C "$@"
 
 ####
 # Copy main program VCB VMEM file
