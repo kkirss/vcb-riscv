@@ -17,6 +17,14 @@ __RAM_SIZE__ = DEFINED( __RAM_SIZE__ ) ? __RAM_SIZE__ : 4096K;
 # Display pointer address
 __DISPLAY_POINTER_ADDRESS__ = DEFINED( __DISPLAY_POINTER_ADDRESS__ ) ? __DISPLAY_POINTER_ADDRESS__ : __RAM_SIZE__ - WORD_SIZE;
 
+# Display buffers total size
+# Note: This is the total size of the display buffers, not the size of each buffer
+# Note: You are responsible for ensuring this is large enough for your application
+__DISPLAY_BUFFERS_SIZE__ = DEFINED( __DISPLAY_BUFFERS_SIZE__ ) ? __DISPLAY_BUFFERS_SIZE__ : 512K;
+
+# Display buffers start address
+__DISPLAY_BUFFERS_START__ = DEFINED( __DISPLAY_BUFFERS_START__ ) ? __DISPLAY_BUFFERS_START__ : __DISPLAY_POINTER_ADDRESS__ - WORD_SIZE - __DISPLAY_BUFFERS_SIZE__;
+
 # Address for the the top of stack
 # Will start growing to lower addresses (as is RISC-V convention)
 __STACK_TOP__ = DEFINED( __STACK_TOP__ ) ? __STACK_TOP__ : __DISPLAY_POINTER_ADDRESS__ - WORD_SIZE;
@@ -74,6 +82,12 @@ SECTIONS
         PROVIDE(__C_STACK_TOP__ = .);
         PROVIDE(__STACK_END__ = .);
         . += STACK_PAD;
+    } > RAM
+
+    .display_buffers __DISPLAY_BUFFERS_START__ : {
+        FILL(0);
+        PROVIDE(__DISPLAY_BUFFERS_START__ = .);
+        . += __DISPLAY_BUFFERS_SIZE__;
     } > RAM
 
     .display_pointer __DISPLAY_POINTER_ADDRESS__ : {
