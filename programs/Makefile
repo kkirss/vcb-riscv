@@ -38,9 +38,9 @@ CXXFLAGS := $(CFLAGS)
 LDFLAGS += -nostartfiles
 LDFLAGS += -static
 LDFLAGS += -D__riscv_ $(INIT_ASSEMBLY)
-LDFLAGS += -Wl,--defsym=RAM_SIZE=$(RAM_SIZE)
-LDFLAGS += -Wl,--defsym=STACK_SIZE=$(STACK_SIZE)
-LDFLAGS += -Wl,--defsym=STACK_TOP=$(STACK_TOP)
+LDFLAGS += -Wl,--defsym=__RAM_SIZE__=$(RAM_SIZE)
+LDFLAGS += -Wl,--defsym=__STACK_SIZE__=$(STACK_SIZE)
+LDFLAGS += -Wl,--defsym=__STACK_TOP__=$(STACK_TOP)
 LDFLAGS += -Wl,--gc-sections
 
 # Verbose logging
