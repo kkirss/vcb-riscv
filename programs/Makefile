@@ -7,6 +7,7 @@ CPU_NAME ?= cpu-v0_1
 MAIN_PROGRAM ?= display_hello
 
 RAM_SIZE := 4096K # 4096K bytes is max size of VMEM (20 bit address of 32-bit word -> 2^20 * (32/8) = 4096K)
+DISPLAY_POINTER_ADDRESS := 0x3FFFF4
 STACK_SIZE := 4K
 STACK_TOP := 0x300000
 
@@ -39,6 +40,7 @@ LDFLAGS += -nostartfiles
 LDFLAGS += -static
 LDFLAGS += -D__riscv_ $(INIT_ASSEMBLY)
 LDFLAGS += -Wl,--defsym=__RAM_SIZE__=$(RAM_SIZE)
+LDFLAGS += -Wl,--defsym=__DISPLAY_POINTER_ADDRESS__=$(DISPLAY_POINTER_ADDRESS)
 LDFLAGS += -Wl,--defsym=__STACK_SIZE__=$(STACK_SIZE)
 LDFLAGS += -Wl,--defsym=__STACK_TOP__=$(STACK_TOP)
 LDFLAGS += -Wl,--gc-sections

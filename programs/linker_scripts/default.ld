@@ -5,23 +5,27 @@ OUTPUT_ARCH(riscv)
 
 ENTRY(_start)
 
+WORD_SIZE = 4;
+SEC_ALIGN = 32;
+STACK_PAD = 16;
+
 # Use variables to allow configuring from the command line
 
 # Size of RAM (in bytes)
 __RAM_SIZE__ = DEFINED( __RAM_SIZE__ ) ? __RAM_SIZE__ : 4096K;
 
+# Display pointer address
+__DISPLAY_POINTER_ADDRESS__ = DEFINED( __DISPLAY_POINTER_ADDRESS__ ) ? __DISPLAY_POINTER_ADDRESS__ : __RAM_SIZE__ - WORD_SIZE;
+
 # Address for the the top of stack
 # Will start growing to lower addresses (as is RISC-V convention)
-__STACK_TOP__ = DEFINED( __STACK_TOP__ ) ? __STACK_TOP__ : __RAM_SIZE__;
+__STACK_TOP__ = DEFINED( __STACK_TOP__ ) ? __STACK_TOP__ : __DISPLAY_POINTER_ADDRESS__ - WORD_SIZE;
 
 # Size of the stack in bytes
 # Note: This doesn't implement any stack overflow checking.
 #       This just ensures this amount of memory is reserved for the stack.
 # Note: There is a 16 byte pad at the top of the stack, just in case
 __STACK_SIZE__ = DEFINED( __STACK_SIZE__ ) ? __STACK_SIZE__ : 4K;
-
-SEC_ALIGN = 32;
-STACK_PAD = 16;
 
 MEMORY
 {
@@ -70,6 +74,12 @@ SECTIONS
         PROVIDE(__C_STACK_TOP__ = .);
         PROVIDE(__STACK_END__ = .);
         . += STACK_PAD;
+    } > RAM
+
+    .display_pointer __DISPLAY_POINTER_ADDRESS__ : {
+        FILL(0);
+        PROVIDE(__DISPLAY_POINTER_ADDRESS__ = .);
+        . += WORD_SIZE;
     } > RAM
 
     _end = .;
