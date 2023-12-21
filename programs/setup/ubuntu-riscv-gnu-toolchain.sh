@@ -13,13 +13,22 @@ else
     sudo apt-get install autoconf automake autotools-dev curl python3 libmpc-dev libmpfr-dev libgmp-dev gawk build-essential bison flex texinfo gperf libtool patchutils bc zlib1g-dev libexpat-dev
 
     RISCV_GNU_TOOLCHAIN_DIR="$HOME/riscv-gnu-toolchain"
-    echo "Cloning riscv-gnu-toolchain into $RISCV_GNU_TOOLCHAIN_DIR..."
-    echo "Note: You can delete this folder after the script is finished"
-    git clone https://github.com/riscv/riscv-gnu-toolchain "$RISCV_GNU_TOOLCHAIN_DIR"
+    if [ -d "$RISCV_GNU_TOOLCHAIN_DIR" ]; then
+        echo "riscv-gnu-toolchain folder found in $RISCV_GNU_TOOLCHAIN_DIR"
+        cd "$RISCV_GNU_TOOLCHAIN_DIR" || exit 1
+        echo "Updating riscv-gnu-toolchain..."
+        git pull
+        git submodule update --recursive --remote
+        make clean
+    else
+        echo "Cloning riscv-gnu-toolchain into $RISCV_GNU_TOOLCHAIN_DIR..."
+        echo "Note: You can delete this folder after the script is finished"
+        git clone https://github.com/riscv/riscv-gnu-toolchain "$RISCV_GNU_TOOLCHAIN_DIR"
+        cd "$RISCV_GNU_TOOLCHAIN_DIR" || exit 1
+    fi
 
     echo "Compiling riscv-gnu-toolchain..."
     echo "Note: This will take ~1 hour"
-    cd "$RISCV_GNU_TOOLCHAIN_DIR" || exit 1
     ./configure --prefix="$RISCV_PREFIX" --enable-multilib
     make
 fi
