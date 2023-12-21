@@ -12,7 +12,7 @@ __RAM_SIZE__ = DEFINED( __RAM_SIZE__ ) ? __RAM_SIZE__ : 4096K;
 
 # Address for the the top of stack
 # Will start growing to lower addresses (as is RISC-V convention)
-__STACK_TOP__ = DEFINED( __STACK_TOP__ ) ? __STACK_TOP__ : ORIGIN(RAM) + LENGTH(RAM);
+__STACK_TOP__ = DEFINED( __STACK_TOP__ ) ? __STACK_TOP__ : __RAM_SIZE__;
 
 # Size of the stack in bytes
 # Note: This doesn't implement any stack overflow checking.
