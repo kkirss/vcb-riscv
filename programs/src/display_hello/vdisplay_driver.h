@@ -4,14 +4,38 @@
 
 const unsigned int WORD_SIZE = 32;
 
-extern const unsigned int DISPLAY_WIDTH_PIXELS;
-extern const unsigned int DISPLAY_HEIGHT_PIXELS;
-extern const unsigned int DISPLAY_COLOR_DEPTH;
+inline unsigned int frame_buffer_pointer __attribute__((used, section (".display_pointer")));
 
-inline unsigned int __attribute__((used, section (".display_buffers"))) frame_buffer_a_start;
+void display_frame_buffer(unsigned int* frame_buffer);
 
-inline unsigned int __attribute__((used, section (".display_pointer"))) frame_buffer_pointer;
+template<unsigned int WIDTH, unsigned int HEIGHT, unsigned int COLOR_DEPTH>
+class Display {
+public:
+    // TODO: What if pixels don't align with word boundaries?
+    // TODO: Ensure that display dimensions are multiples of word size
 
-void display_frame_buffer(const unsigned int &frame_buffer_start);
+    static constexpr unsigned int FRAME_BUFFER_SIZE = (WIDTH * HEIGHT * COLOR_DEPTH) / WORD_SIZE;
+    static inline unsigned int frame_buffer_a[FRAME_BUFFER_SIZE] __attribute__((used, section(".display_buffers")));
+    static inline unsigned int frame_buffer_b[FRAME_BUFFER_SIZE] __attribute__((used, section(".display_buffers"))); // For future use
 
-void set_pixel_1b(unsigned int x, unsigned int y, unsigned int new_color, unsigned int &frame_buffer_start);
+    static void set_pixel_1b(unsigned int x, unsigned int y, unsigned int new_color, unsigned int *frame_buffer) {
+        // Calculate the sequential pixel number within the frame buffer
+        const unsigned int sequential_pixel_number = x + (y * WIDTH);
+
+        // Calculate the word address within the frame buffer
+        const unsigned int mem_word_address = sequential_pixel_number / WORD_SIZE;
+
+        // Get reference to the word where the pixel is located
+        unsigned int &pixel_word = frame_buffer[mem_word_address];
+
+        // Calculate the bit mask for the pixel, within the word
+        const unsigned int mem_pixel_mask = 1 << (WORD_SIZE - (sequential_pixel_number % WORD_SIZE) - 1);
+
+        // Set or clear the pixel based on new_color
+        if (new_color == 1) {
+            pixel_word |= mem_pixel_mask;
+        } else {
+            pixel_word &= ~mem_pixel_mask;
+        }
+    }
+};
