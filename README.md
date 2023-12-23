@@ -158,15 +158,3 @@ Note: I'm not sure if the tests are idempotent, so you might want to disable VME
 ## Contributing
 
 Feel free to open issues and pull requests for improvements :)
-
-## Library
-
-There used to be a VCB circuit library in this repository.
-I have put this piece on hold for now.
-
-### Blueprint images
-
-The `vcb_riscv` Python module is for generating images of blueprints.
-This uses the [vcbb](https://github.com/chrjen/vcbb) project internally.
-
-(Though the repository makes no use of this for now.)
