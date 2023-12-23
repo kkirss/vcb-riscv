@@ -12,6 +12,6 @@ inline unsigned int __attribute__((used, section (".display_buffers"))) frame_bu
 
 inline unsigned int __attribute__((used, section (".display_pointer"))) frame_buffer_pointer;
 
-void display_frame_buffer(const unsigned int* frame_buffer_start);
+void display_frame_buffer(const unsigned int &frame_buffer_start);
 
-void set_pixel_1b(unsigned int x, unsigned int y, unsigned int new_color, unsigned int* frame_buffer_start);
+void set_pixel_1b(unsigned int x, unsigned int y, unsigned int new_color, unsigned int &frame_buffer_start);

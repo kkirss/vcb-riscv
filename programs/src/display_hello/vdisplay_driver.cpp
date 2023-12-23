@@ -1,12 +1,12 @@
 #include "vdisplay_driver.h"
 
 
-void display_frame_buffer(const unsigned int* frame_buffer_start) {
+void display_frame_buffer(const unsigned int &frame_buffer_start) {
     // Divide by 4 as VMEM address is in words
-    frame_buffer_pointer = reinterpret_cast<unsigned int>(frame_buffer_start) >> 2;
+    frame_buffer_pointer = reinterpret_cast<unsigned int>(&frame_buffer_start) >> 2;
 }
 
-void set_pixel_1b(unsigned int x, unsigned int y, unsigned int new_color, unsigned int* frame_buffer_start) {
+void set_pixel_1b(unsigned int x, unsigned int y, unsigned int new_color, unsigned int &frame_buffer_start) {
     // TODO: What if pixels don't align with word boundaries?
     // TODO: Ensure that display dimensions are multiples of word size
 
@@ -17,7 +17,7 @@ void set_pixel_1b(unsigned int x, unsigned int y, unsigned int new_color, unsign
     const unsigned int mem_word_address = sequential_pixel_number / WORD_SIZE;
 
     // Calculate the actual memory address to be accessed
-    volatile unsigned int* pixel_word = frame_buffer_start + mem_word_address;
+    volatile unsigned int* pixel_word = reinterpret_cast<unsigned int*>(&frame_buffer_start) + mem_word_address;
 
     // Calculate the bit mask for the pixel
     const unsigned int mem_pixel_mask = 1 << (WORD_SIZE - (sequential_pixel_number % WORD_SIZE) - 1);
