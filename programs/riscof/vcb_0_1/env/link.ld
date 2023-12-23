@@ -38,6 +38,8 @@ __STACK_SIZE__ = DEFINED( __STACK_SIZE__ ) ? __STACK_SIZE__ : 4K;
 MEMORY
 {
     RAM (rwx) : ORIGIN = 0x0, LENGTH = __RAM_SIZE__
+    DISPLAY_BUFFERS (rw) : ORIGIN = __DISPLAY_BUFFERS_START__, LENGTH = __DISPLAY_BUFFERS_SIZE__
+    DISPLAY_POINTER (rw) : ORIGIN = __DISPLAY_POINTER_ADDRESS__, LENGTH = WORD_SIZE
 }
 
 SECTIONS
@@ -84,17 +86,15 @@ SECTIONS
         . += STACK_PAD;
     } > RAM
 
-    .display_buffers __DISPLAY_BUFFERS_START__ : {
-        FILL(0);
+    .display_buffers : {
         PROVIDE(__DISPLAY_BUFFERS_START__ = .);
-        . += __DISPLAY_BUFFERS_SIZE__;
-    } > RAM
+        KEEP (*(.display_buffers));
+    } > DISPLAY_BUFFERS AT> RAM
 
-    .display_pointer __DISPLAY_POINTER_ADDRESS__ : {
-        FILL(0);
+    .display_pointer : {
         PROVIDE(__DISPLAY_POINTER_ADDRESS__ = .);
-        . += WORD_SIZE;
-    } > RAM
+        KEEP (*(.display_pointer));
+    } > DISPLAY_POINTER AT> RAM
 
     _end = .;
 }
