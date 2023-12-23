@@ -1,4 +1,5 @@
 #pragma once
+#include "sprite.h"
 
 // Co-ordinates originate from top-left
 
@@ -36,6 +37,15 @@ public:
             pixel_word |= mem_pixel_mask;
         } else {
             pixel_word &= ~mem_pixel_mask;
+        }
+    }
+
+    template<typename SPRITE_T, unsigned int SPRITE_WIDTH, unsigned int SPRITE_HEIGHT>
+    static void draw_sprite(unsigned int x_pos, unsigned int y_pos, const Sprite<SPRITE_T, SPRITE_WIDTH, SPRITE_HEIGHT>& sprite, unsigned int *frame_buffer) {
+        for (unsigned int y = 0; y < SPRITE_HEIGHT; ++y) {
+            for (unsigned int x = 0; x < SPRITE_WIDTH; ++x) {
+                set_pixel_1b(x_pos + x, y_pos + y, sprite.pixels[y][x], frame_buffer);
+            }
         }
     }
 };
