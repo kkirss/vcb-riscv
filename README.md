@@ -20,9 +20,9 @@ There is a VCB file for a RISC-V CPU - `cpu-v0_1.vcb`.
 
 See [CPU-V0_1.md](CPU-V0_1.md) for more details. 
 
-## Programs
+## Software
 
-The `programs` folder contains C/C++ programs and a `Makefile` to compile these.
+The project contains C/C++ code and a `Makefile` to compile these.
 
 See [Tests](#tests) for details on running tests.
 
@@ -31,7 +31,7 @@ See [Tests](#tests) for details on running tests.
 You need to have the following installed:
 * make
 * gcc (riscv64-unknown-elf-gcc)
-  * Run `programs/setup/ubuntu-riscv-gnu-toolchain.sh` for easy setup on Ubuntu.
+  * Run `setup/ubuntu-riscv-gnu-toolchain.sh` for easy setup on Ubuntu.
 
 Note: The `Makefile` is tested on Ubuntu (WSL). But it should work on most Linux distros and possibly on Mac.
 
@@ -39,7 +39,6 @@ Note: The `Makefile` is tested on Ubuntu (WSL). But it should work on most Linux
 
 To compile everything:
 ```
-cd ./programs
 make all
 ```
 
@@ -60,7 +59,7 @@ Contributions to add support for this are especially welcome.
 
 #### Compilation
 
-Running `make all` will compile all programs in the `src` folder to:
+Running `make all` will compile all code in the `src` folder to:
 * `build/<program>/main.vcbmem` - VCB VMEM file
   * VCB 'VMEM Editor' tab has an 'Edit VMEM externally' button (bottom left) to load this into VMEM.
 * `build/<program>/main.elf` - Main ELF executable
@@ -88,11 +87,11 @@ The signatures are compared to determine if the test passed or failed.
 You need to have the following installed:
 * Python 3 & pip (already installed on most systems)
 * gcc (riscv64-unknown-elf-gcc)
-  * Run `programs/setup/ubuntu-riscv-gnu-toolchain.sh` for easy setup on Ubuntu.
+  * Run `setup/ubuntu-riscv-gnu-toolchain.sh` for easy setup on Ubuntu.
 * [RISCOF](https://riscof.readthedocs.io/en/stable/installation.html#install-riscof)
-  * Run `programs/setup/ubuntu-riscof.sh` for easy setup on Ubuntu.
+  * Run `setup/ubuntu-riscof.sh` for easy setup on Ubuntu.
 * [Spike](https://github.com/riscv-software-src/riscv-isa-sim#build-steps)
-  * Run `programs/setup/ubuntu-spike.sh` for easy setup on Ubuntu.
+  * Run `setup/ubuntu-spike.sh` for easy setup on Ubuntu.
 
 #### Testing in VCB
 
@@ -108,7 +107,6 @@ During a test run, GNOME Terminal windows are opened with instructions.
 
 To run all tests:
 ```
-cd ./programs
 make riscof_run
 ```
 
@@ -129,9 +127,9 @@ make riscof_run_<test>
 
 ### Test results
 
-After running a test, an HTML report is generated in `programs/riscof/riscof_work/report.html`.
+After running a test, an HTML report is generated in `riscof/riscof_work/report.html`.
 
-The signatures files are stored in `programs/riscof/riscof_work/rv32i_m/I/src/*/dut|ref/*.signature`.
+The signatures files are stored in `riscof/riscof_work/rv32i_m/I/src/*/dut|ref/*.signature`.
 
 ### Debugging
 
@@ -141,15 +139,15 @@ To get a better idea of what the test are doing, you can disassemble the test EL
 ```
 make riscof_disassemble
 ```
-You can then view the assembly files in `programs/riscof/riscof_work/rv32i_m/I/src/*/dut/my.elf.d`.
+You can then view the assembly files in `riscof/riscof_work/rv32i_m/I/src/*/dut/my.elf.d`.
 (This is the exact assembly used for the `.vcbmem`.)
 
 #### Source code
 
-You can find the source code for each test in `programs/riscof/riscv-arch-test/riscv-test-suite/rv32i_m/I/src`.
+You can find the source code for each test in `riscof/riscv-arch-test/riscv-test-suite/rv32i_m/I/src`.
 
 Note that these use macros, which can obfuscate things a bit.
-You can find the macros in `programs/riscof/riscv-arch-test/riscv-test-suite/env`
+You can find the macros in `riscof/riscv-arch-test/riscv-test-suite/env`
 
 #### Debugging in VCB
 

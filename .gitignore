@@ -4,14 +4,14 @@ node_modules/
 *.pyc
 
 data/
-programs/build
+build
 .env
 
-/programs/src/**/*.o
-/programs/src/**/*.d
-/programs/src/**/*.s
-/programs/riscof/riscof_work
-/programs/riscof/riscv-arch-test
-/programs/riscof/riscv-plugins
+src/**/*.o
+src/**/*.d
+src/**/*.s
+riscof/riscof_work
+riscof/riscv-arch-test
+riscof/riscv-plugins
 *.vcbmem
 *.backup

@@ -21,8 +21,8 @@ $(RISCOF_PLUGINS_REPO_DIR):
 	@git clone https://gitlab.com/incoresemi/riscof-plugins.git "$(RISCOF_PLUGINS_REPO_DIR)"
 
 $(RISCV_ARCH_TEST_REPO_DIR):
-	@which riscof > /dev/null || (echo "riscof is not installed" && echo "Please run programs/setup/ubuntu-riscof.sh to install on Ubuntu" && exit 1)
-	@[ -f "$(SPIKE_PATH)" ] || (echo "Spike RISC-V simulator is not installed" && echo "Please run programs/setup/ubuntu-riscof.sh to install on Ubuntu" && exit 1)
+	@which riscof > /dev/null || (echo "riscof is not installed" && echo "Please run setup/ubuntu-riscof.sh to install on Ubuntu" && exit 1)
+	@[ -f "$(SPIKE_PATH)" ] || (echo "Spike RISC-V simulator is not installed" && echo "Please run setup/ubuntu-riscof.sh to install on Ubuntu" && exit 1)
 	@which riscv32-unknown-elf-gcc > /dev/null 2>&1 || (echo "Assuming riscv64-unknown-elf-gcc to be multilib compiler" && echo "Linking riscv32-unknown-elf-gcc to riscv64-unknown-elf-gcc" && ln -sTf "$(RISCV_PREFIX)/bin/riscv64-unknown-elf-gcc" "$(RISCV_PREFIX)/bin/riscv32-unknown-elf-gcc")
 	@echo "Cloning riscv-arch-test..."
 	@riscof arch-test --clone --dir="$(RISCV_ARCH_TEST_REPO_DIR)"
