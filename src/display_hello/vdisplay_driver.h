@@ -3,11 +3,11 @@
 
 // Co-ordinates originate from top-left
 
-const unsigned int WORD_SIZE = 32;
+constexpr unsigned int WORD_SIZE = 32;
 
 inline unsigned int frame_buffer_pointer __attribute__((used, section (".display_pointer")));
 
-void display_frame_buffer(unsigned int* frame_buffer);
+void display_frame_buffer(const unsigned int* frame_buffer);
 
 template<unsigned int WIDTH, unsigned int HEIGHT, unsigned int COLOR_DEPTH>
 class Display {
@@ -19,7 +19,7 @@ public:
     static inline unsigned int frame_buffer_a[FRAME_BUFFER_SIZE] __attribute__((used, section(".display_buffers")));
     static inline unsigned int frame_buffer_b[FRAME_BUFFER_SIZE] __attribute__((used, section(".display_buffers"))); // For future use
 
-    static void set_pixel_1b(unsigned int x, unsigned int y, unsigned int new_color, unsigned int *frame_buffer) {
+    static void set_pixel_1b(const unsigned int x, const unsigned int y, const unsigned int new_color, unsigned int *frame_buffer) {
         // Calculate the sequential pixel number within the frame buffer
         const unsigned int sequential_pixel_number = x + (y * WIDTH);
 
@@ -41,7 +41,7 @@ public:
     }
 
     template<typename SPRITE_T, unsigned int SPRITE_WIDTH, unsigned int SPRITE_HEIGHT>
-    static void draw_sprite(unsigned int x_pos, unsigned int y_pos, const Sprite<SPRITE_T, SPRITE_WIDTH, SPRITE_HEIGHT>& sprite, unsigned int *frame_buffer) {
+    static void draw_sprite(const unsigned int x_pos, const unsigned int y_pos, const Sprite<SPRITE_T, SPRITE_WIDTH, SPRITE_HEIGHT>& sprite, unsigned int *frame_buffer) {
         for (unsigned int y = 0; y < SPRITE_HEIGHT; ++y) {
             for (unsigned int x = 0; x < SPRITE_WIDTH; ++x) {
                 set_pixel_1b(x_pos + x, y_pos + y, sprite.pixels[y][x], frame_buffer);

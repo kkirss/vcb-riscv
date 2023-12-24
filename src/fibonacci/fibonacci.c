@@ -1,4 +1,4 @@
-int calculate_fibonacci_term(int n) {
+int calculate_fibonacci_term(const int n) {
     int t1 = 0;
     int t2 = 0;
     int next_term = 1;
