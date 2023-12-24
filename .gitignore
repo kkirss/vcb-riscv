@@ -17,9 +17,11 @@ riscof/riscv-plugins
 *.backup
 
 .cmake
+*.cbp
 CMakeLists.txt.user
 CMakeCache.txt
 CMakeFiles
 CMakeScripts
+Testing
 Makefile
 cmake_install.cmake
