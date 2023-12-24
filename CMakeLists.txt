@@ -35,9 +35,9 @@ set(COMMON_OPTIONS
     -mbranch-cost=2
     -mtune=size
     # Verbose logging
-#    --verbose
-#    -Wl,--verbose
-#    -Wl,--print-gc-sections
+    #    --verbose
+    #    -Wl,--verbose
+    #    -Wl,--print-gc-sections
 )
 
 add_compile_options(

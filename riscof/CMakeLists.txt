@@ -56,7 +56,7 @@ add_custom_target(riscof_run_all
     COMMENT "Running all riscof tests"
     DEPENDS ${RISCOF_TEST_LIST}
     COMMAND rm -rf ${RISCOF_WORK_DIR}/**/**/src/**/dut
-	COMMAND rm -rf ${RISCOF_WORK_DIR}/**/**/src/**/ref
+    COMMAND rm -rf ${RISCOF_WORK_DIR}/**/**/src/**/ref
     COMMAND riscof --verbose debug run ${RISCOF_FLAGS} --testfile=${RISCOF_TEST_LIST} --no-browser
 )
 
@@ -66,6 +66,6 @@ add_custom_target(riscof_run
     COMMENT "Running riscof test $ENV{TEST_NAME}"
     DEPENDS ${RISCOF_SEPARATE_TEST_FOLDER}
     COMMAND rm -rf ${RISCOF_WORK_DIR}/**/**/src/$ENV{TEST_NAME}*/dut
-	COMMAND rm -rf ${RISCOF_WORK_DIR}/**/**/src/$ENV{TEST_NAME}*/ref
+    COMMAND rm -rf ${RISCOF_WORK_DIR}/**/**/src/$ENV{TEST_NAME}*/ref
     COMMAND riscof --verbose debug run ${RISCOF_FLAGS} --testfile=${RISCOF_SEPARATE_TEST_FOLDER}/$ENV{TEST_NAME}.yaml --no-browser
 )
