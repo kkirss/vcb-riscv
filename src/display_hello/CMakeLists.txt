@@ -1,10 +1,10 @@
-add_executable(display_hello
+set(TARGET_NAME display_hello)
+
+add_executable(${TARGET_NAME}
     main.cpp
     simple_font.cpp
     vdisplay_driver.cpp
 )
 
-target_include_directories(display_hello PRIVATE ${CMAKE_SOURCE_DIR}/src/display_hello)
-
-add_disassembly(display_hello)
-add_vcbmem(display_hello)
+add_disassembly(${TARGET_NAME})
+add_vcbmem(${TARGET_NAME})
