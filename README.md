@@ -22,57 +22,68 @@ See [CPU-V0_1.md](CPU-V0_1.md) for more details.
 
 ## Software
 
-The project contains C/C++ code and a `Makefile` to compile these.
+The project contains C/C++ code and a CMake/Make toolchain to compile these.
 
 See [Tests](#tests) for details on running tests.
 
 ### Dependencies
 
+If you're on Windows, you can use WSL (Windows Subsystem for Linux) to run everything.
+(You can run VCB itself in Windows.)
+
 You need to have the following installed:
-* make
+* CMake (already installed on most systems)
+* Make (already installed on most systems)
 * gcc (riscv64-unknown-elf-gcc)
   * Run `setup/ubuntu-riscv-gnu-toolchain.sh` for easy setup on Ubuntu.
 
-Note: The `Makefile` is tested on Ubuntu (WSL). But it should work on most Linux distros and possibly on Mac.
+Note: Everything has been tested on Ubuntu (WSL).
+But it should work on most Linux distros and possibly on Mac.
 
-### Usage
-
-To compile everything:
-```
-make all
-```
-
-For more details on usage, run `make help`.
-
-#### Source Code
+### Source Code
 
 The `src` folder contains C/C++ source code.
 Each program is in its own folder.
 
-Each program must have a `main.c`/`main.cpp` file, with a `main()` function.
-This is the entry point for the program.
-
-Each program can include other source and header files.
-
-NB: The `Makefile` assumes the C/C++ standard library is not used.
+Note: Using C/C++ standard library is not well tested.
 Contributions to add support for this are especially welcome.
 
-#### Compilation
+### Quickstart
 
-Running `make all` will compile all code in the `src` folder to:
-* `build/<program>/main.vcbmem` - VCB VMEM file
+To compile everything:
+```bash
+cmake .
+make
+```
+
+### CMake
+
+`CMakeLists.txt` files are used to configure the compilation.
+
+Running `cmake .` will generate a `Makefile`.
+You'll need to re-run this if you change the `CMakeLists.txt` files.
+
+### Compilation
+
+Running `make` will compile all code in the `src` folder to:
+* `build/<program>.vcbmem` - VCB VMEM file
   * VCB 'VMEM Editor' tab has an 'Edit VMEM externally' button (bottom left) to load this into VMEM.
-* `build/<program>/main.elf` - Main ELF executable
-* `build/<program>/main.elf.d` - RISC-V assembly
+* `build/<program>` - Main ELF executable
+* `build/<program>.elf.d` - RISC-V assembly
   * Disassembled from the main ELF executable.
   * Effectively, the exact assembly used for the `.vcbmem`.
-* `src/<program>/<file>.s` - RISC-V assembly
-  * Assembly of each source file, including comments with original source code.
-  * This is not the exact assembly used for the `.vcbmem`. See `.elf.d` for that.
-* `src/<program>/<file>.o` - Object file
-* `src/<program>/<file>.d` - Dependency file
 
-See the `Makefile` for more details.
+Run `make help` for all available targets.
+
+### Using vcbmem files
+
+To make it easier to use the `.vcbmem` files, you can run:
+```bash
+make cpu_<program>
+```
+
+This will compile the program and copy the .vcbmem file next to the CPU VCB project.
+(I.e. `build/<program>.vcbmem` to `<CPU_NAME>.vcbmem`. CPU_NAME is defined in `CMakelists.txt`.)
 
 ## Tests
 
@@ -85,6 +96,8 @@ The signatures are compared to determine if the test passed or failed.
 ### Dependencies
 
 You need to have the following installed:
+* CMake (already installed on most systems)
+* Make (already installed on most systems)
 * Python 3 & pip (already installed on most systems)
 * gcc (riscv64-unknown-elf-gcc)
   * Run `setup/ubuntu-riscv-gnu-toolchain.sh` for easy setup on Ubuntu.
@@ -92,6 +105,8 @@ You need to have the following installed:
   * Run `setup/ubuntu-riscof.sh` for easy setup on Ubuntu.
 * [Spike](https://github.com/riscv-software-src/riscv-isa-sim#build-steps)
   * Run `setup/ubuntu-spike.sh` for easy setup on Ubuntu.
+
+You'll also need to run `cmake .` once to generate the `Makefile`.
 
 #### Testing in VCB
 
@@ -107,7 +122,7 @@ During a test run, GNOME Terminal windows are opened with instructions.
 
 To run all tests:
 ```
-make riscof_run
+make riscof_run_all
 ```
 
 Note: There are a lot of tests.
@@ -122,7 +137,7 @@ make riscof_separate_tests
 
 Then run the test:
 ```
-make riscof_run_<test>
+TEST_NAME=<test> make riscof_run
 ```
 
 ### Test results
@@ -135,11 +150,7 @@ The signatures files are stored in `riscof/riscof_work/rv32i_m/I/src/*/dut|ref/*
 
 #### Disassembly
 
-To get a better idea of what the test are doing, you can disassemble the test ELF files:
-```
-make riscof_disassemble
-```
-You can then view the assembly files in `riscof/riscof_work/rv32i_m/I/src/*/dut/my.elf.d`.
+To get a better idea of what the test are doing, you can then view the disassembled assembly files in `riscof/riscof_work/rv32i_m/I/src/*/dut/my.elf.d`.
 (This is the exact assembly used for the `.vcbmem`.)
 
 #### Source code

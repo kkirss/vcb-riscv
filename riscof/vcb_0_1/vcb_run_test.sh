@@ -25,6 +25,10 @@ echo "Converting ELF executable to VCB VMEM file"
 ${RISCV_PREFIX}objcopy -O binary "$ELF_FILE" "$BIN_FILE"
 ${RISCV_PREFIX}objcopy -I binary -O binary --reverse-bytes=4 "$BIN_FILE" "$VCBMEM_ORIGINAL_FILE"
 
+# Disassemble the ELF file
+echo "Disassembling ELF executable"
+${RISCV_PREFIX}objdump --disassemble --source "$ELF_FILE" > "${ELF_FILE}.d"
+
 # Confirm if the user is ready to start the test
 echo ""
 echo "Press any key to prepare test. (This will overwrite the running vcbmem file.)"
