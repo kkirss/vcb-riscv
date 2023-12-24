@@ -1,3 +1,9 @@
+set(TOOLCHAIN_PREFIX "/opt/riscv/bin/riscv64-unknown-elf")
+set(CMAKE_C_COMPILER "${TOOLCHAIN_PREFIX}-gcc")
+set(CMAKE_CXX_COMPILER "${TOOLCHAIN_PREFIX}-g++")
+set(CMAKE_OBJCOPY "${TOOLCHAIN_PREFIX}-objcopy")
+set(CMAKE_OBJDUMP "${TOOLCHAIN_PREFIX}-objdump")
+
 cmake_minimum_required(VERSION 3.13)
 project(vcb-riscv VERSION 1.0)
 
@@ -20,12 +26,6 @@ set(INIT_ASSEMBLY "${INIT_ASSEMBLIES}/default.s")
 set(CMAKE_SYSTEM_NAME "Generic")
 set(CMAKE_SYSTEM_PROCESSOR "riscv")
 set(CMAKE_CROSSCOMPILING 1)
-
-set(TOOLCHAIN_PREFIX "riscv64-unknown-elf")
-set(CMAKE_C_COMPILER "${TOOLCHAIN_PREFIX}-gcc")
-set(CMAKE_CXX_COMPILER "${TOOLCHAIN_PREFIX}-g++")
-set(CMAKE_OBJCOPY "${TOOLCHAIN_PREFIX}-objcopy")
-set(CMAKE_OBJDUMP "${TOOLCHAIN_PREFIX}-objdump")
 
 set(COMMON_OPTIONS
     -O4

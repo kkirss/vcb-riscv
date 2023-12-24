@@ -16,6 +16,7 @@ riscof/riscv-plugins
 *.vcbmem
 *.backup
 
+.cmake
 CMakeLists.txt.user
 CMakeCache.txt
 CMakeFiles
