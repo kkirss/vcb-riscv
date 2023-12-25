@@ -106,6 +106,8 @@ endfunction()
 
 include_directories(src)
 
+add_subdirectory(lib/libsprite)
+
 add_subdirectory(src/display_hello)
 add_subdirectory(src/fibonacci)
 
