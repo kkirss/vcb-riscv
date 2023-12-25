@@ -1,10 +1,8 @@
 set(TARGET_NAME libsimple_font)
 
-add_library(${TARGET_NAME} OBJECT
-    simple_font.cpp
-)
+add_library(${TARGET_NAME} INTERFACE)
 
-target_link_libraries(${TARGET_NAME} PRIVATE
+target_link_libraries(${TARGET_NAME} INTERFACE
     libsprite
 )
 

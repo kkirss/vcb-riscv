@@ -5,14 +5,74 @@
 namespace SimpleFont {
     typedef Sprite<unsigned int, 4, 5> SpriteType;
 
-    extern const SpriteType D;
-    extern const SpriteType E;
-    extern const SpriteType H;
-    extern const SpriteType I;
-    extern const SpriteType L;
-    extern const SpriteType O;
-    extern const SpriteType R;
-    extern const SpriteType W;
-    extern const SpriteType SPACE;
-    extern const SpriteType EXCLAMATION_MARK;
+    inline constexpr SpriteType D = {{
+        {1, 1, 1, 0},
+        {1, 0, 0, 1},
+        {1, 0, 0, 1},
+        {1, 0, 0, 1},
+        {1, 1, 1, 0}
+    }};
+    inline constexpr SpriteType E = {{
+        {1, 1, 1, 1},
+        {1, 0, 0, 0},
+        {1, 1, 1, 0},
+        {1, 0, 0, 0},
+        {1, 1, 1, 1}
+    }};
+    inline constexpr SpriteType H = {{
+        {1, 0, 0, 1},
+        {1, 0, 0, 1},
+        {1, 1, 1, 1},
+        {1, 0, 0, 1},
+        {1, 0, 0, 1}
+    }};
+    inline constexpr SpriteType I = {{
+        {1, 1, 1, 0},
+        {0, 1, 0, 0},
+        {0, 1, 0, 0},
+        {0, 1, 0, 0},
+        {1, 1, 1, 0}
+    }};
+    inline constexpr SpriteType L = {{
+        {1, 0, 0, 0},
+        {1, 0, 0, 0},
+        {1, 0, 0, 0},
+        {1, 0, 0, 0},
+        {1, 1, 1, 1}
+    }};
+    inline constexpr SpriteType O = {{
+        {0, 1, 1, 0},
+        {1, 0, 0, 1},
+        {1, 0, 0, 1},
+        {1, 0, 0, 1},
+        {0, 1, 1, 0}
+    }};
+    inline constexpr SpriteType R = {{
+        {1, 1, 1, 0},
+        {1, 0, 0, 1},
+        {1, 1, 1, 0},
+        {1, 0, 1, 0},
+        {1, 0, 0, 1}
+    }};
+    inline constexpr SpriteType W = {{
+        {1, 0, 0, 1},
+        {1, 0, 0, 1},
+        {1, 1, 0, 1},
+        {1, 1, 1, 1},
+        {1, 0, 1, 0}
+    }};
+    inline constexpr SpriteType SPACE = {{
+        {0, 0, 0, 0},
+        {0, 0, 0, 0},
+        {0, 0, 0, 0},
+        {0, 0, 0, 0},
+        {0, 0, 0, 0}
+    }};
+    inline constexpr SpriteType EXCLAMATION_MARK = {{
+        {0, 1, 0, 0},
+        {0, 1, 0, 0},
+        {0, 1, 0, 0},
+        {0, 0, 0, 0},
+        {0, 1, 0, 0}
+    }};
 };
