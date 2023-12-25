@@ -40,6 +40,7 @@ set(COMMON_OPTIONS
     #    -Wl,--print-gc-sections
 )
 
+set(CMAKE_CXX_STANDARD 20)
 add_compile_options(
     ${COMMON_OPTIONS}
     # Include debug symbols (can be used to add source code annotation to disassembly)
