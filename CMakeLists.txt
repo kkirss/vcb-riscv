@@ -11,8 +11,6 @@ set(CPU_NAME "cpu-v0_1")
 
 set(RAM_SIZE "4096K") # 4096K bytes is max size of VMEM (20 bit address of 32-bit word -> 2^20 * (32/8) = 4096K)
 set(DISPLAY_POINTER_ADDRESS "0x3FFFF4")
-set(DISPLAY_BUFFERS_START "0x300000")
-set(DISPLAY_BUFFERS_SIZE "900K")
 set(STACK_SIZE "4K")
 set(STACK_TOP "0x2FFFFC")
 
@@ -57,8 +55,6 @@ add_link_options(
     -D__riscv_ ${INIT_ASSEMBLY}
     -Wl,--defsym=__RAM_SIZE__=${RAM_SIZE}
     -Wl,--defsym=__DISPLAY_POINTER_ADDRESS__=${DISPLAY_POINTER_ADDRESS}
-    -Wl,--defsym=__DISPLAY_BUFFERS_START__=${DISPLAY_BUFFERS_START}
-    -Wl,--defsym=__DISPLAY_BUFFERS_SIZE__=${DISPLAY_BUFFERS_SIZE}
     -Wl,--defsym=__STACK_SIZE__=${STACK_SIZE}
     -Wl,--defsym=__STACK_TOP__=${STACK_TOP}
     -Wl,--gc-sections

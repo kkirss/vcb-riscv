@@ -17,8 +17,8 @@ public:
     // TODO: Ensure that display dimensions are multiples of word size
 
     static constexpr unsigned int FRAME_BUFFER_SIZE = (WIDTH * HEIGHT * COLOR_DEPTH) / WORD_SIZE;
-    static inline unsigned int frame_buffer_a[FRAME_BUFFER_SIZE] __attribute__((used, section(".display_buffers")));
-    static inline unsigned int frame_buffer_b[FRAME_BUFFER_SIZE] __attribute__((used, section(".display_buffers"))); // For future use
+    static inline unsigned int frame_buffer_a[FRAME_BUFFER_SIZE];
+    static inline unsigned int frame_buffer_b[FRAME_BUFFER_SIZE]; // For future use
 
     static void set_pixel_1b(const unsigned int x, const unsigned int y, const unsigned int new_color, unsigned int *frame_buffer) {
         // Calculate the sequential pixel number within the frame buffer
