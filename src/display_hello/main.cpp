@@ -1,4 +1,5 @@
 #include "vdisplay_driver.h"
+#include "vdisplay_sprite.h"
 #include "simple_font.h"
 
 constexpr unsigned int DISPLAY_WIDTH_PIXELS = 192;
@@ -10,6 +11,6 @@ typedef Display<DISPLAY_WIDTH_PIXELS, DISPLAY_HEIGHT_PIXELS, DISPLAY_COLOR_DEPTH
 int main() {
     display_frame_buffer(display::frame_buffer_a);
 
-    display::draw_sprite(1, 1, SimpleFont::H, display::frame_buffer_a);
-    display::draw_sprite(1 + 5, 1, SimpleFont::I, display::frame_buffer_a);
+    draw_sprite<display>(1, 1, SimpleFont::H, display::frame_buffer_a);
+    draw_sprite<display>(1 + 5, 1, SimpleFont::I, display::frame_buffer_a);
 }

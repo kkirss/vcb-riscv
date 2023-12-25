@@ -1,5 +1,6 @@
 #pragma once
-#include "sprite.h"
+
+#include <type_traits>
 
 // Co-ordinates originate from top-left
 
@@ -39,13 +40,13 @@ public:
             pixel_word &= ~mem_pixel_mask;
         }
     }
-
-    template<IsSprite SpriteType>
-    static void draw_sprite(const unsigned int x_pos, const unsigned int y_pos, const SpriteType& sprite, unsigned int *frame_buffer) {
-        for (unsigned int y = 0; y < SpriteType::height; ++y) {
-            for (unsigned int x = 0; x < SpriteType::width; ++x) {
-                set_pixel_1b(x_pos + x, y_pos + y, sprite.pixels[y][x], frame_buffer);
-            }
-        }
-    }
 };
+
+template<typename T>
+struct is_display : std::false_type {};
+
+template<unsigned int WIDTH, unsigned int HEIGHT, unsigned int COLOR_DEPTH>
+struct is_display<Display<WIDTH, HEIGHT, COLOR_DEPTH>> : std::true_type {};
+
+template<typename T>
+concept IsDisplay = is_display<T>::value;
