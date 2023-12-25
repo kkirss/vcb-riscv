@@ -27,10 +27,10 @@ public:
     static inline unsigned int frame_buffer_a[FRAME_BUFFER_SIZE];
     static inline unsigned int frame_buffer_b[FRAME_BUFFER_SIZE]; // For future use
 
-    static void set_pixel_1b(const unsigned int x,
-                             const unsigned int y,
-                             const unsigned int new_color,
-                             unsigned int *frame_buffer) {
+    static void draw_pixel(const unsigned int x,
+                           const unsigned int y,
+                           const unsigned int new_color,
+                           unsigned int *frame_buffer) {
         // Calculate the sequential pixel number within the frame buffer
         const unsigned int sequential_pixel_number = x + (y * WIDTH);
 
@@ -43,15 +43,12 @@ public:
         // Calculate the index of the pixel within the word
         const unsigned int pixel_word_index = sequential_pixel_number % PIXELS_PER_WORD;
 
-        // Calculate the mask for the pixel within the word (MSB is left-most pixel)
-        const unsigned int mem_pixel_mask = PIXEL_MASK_MSB >> pixel_word_index;
+        // Calculate the masks for the pixel within the word (MSB is left-most pixel)
+        const unsigned int shift_amount = WORD_SIZE - (COLOR_DEPTH * (pixel_word_index + 1));
+        const unsigned int pixel_mask = PIXEL_MASK_LSB << shift_amount;
+        const unsigned int shifted_color = new_color << shift_amount;
 
-        // Set or clear the pixel based on new_color
-        if (new_color == 1) {
-            pixel_word |= mem_pixel_mask;
-        } else {
-            pixel_word &= ~mem_pixel_mask;
-        }
+        pixel_word = (pixel_word & ~pixel_mask) | shifted_color;
     }
 };
 
