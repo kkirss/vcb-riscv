@@ -8,6 +8,7 @@ using std::array;
 template <typename PIXEL_T, unsigned int WIDTH, unsigned int HEIGHT>
 struct Sprite {
     const array<array<PIXEL_T, WIDTH>, HEIGHT> pixels;
+    typedef PIXEL_T pixel_type;
     static const unsigned int width = WIDTH;
     static const unsigned int height = HEIGHT;
 };
