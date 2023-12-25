@@ -4,7 +4,7 @@
 
 template<typename PIXEL_T, unsigned int WIDTH, unsigned int HEIGHT>
 struct Sprite {
-    PIXEL_T pixels[HEIGHT][WIDTH];
+    const PIXEL_T pixels[HEIGHT][WIDTH];
     static const unsigned int width = WIDTH;
     static const unsigned int height = HEIGHT;
 };
