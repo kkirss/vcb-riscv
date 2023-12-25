@@ -13,6 +13,10 @@ void display_frame_buffer(const unsigned int *frame_buffer);
 template <unsigned int WIDTH, unsigned int HEIGHT, unsigned int COLOR_DEPTH>
 class Display {
 public:
+    static constexpr unsigned int width = WIDTH;
+    static constexpr unsigned int height = HEIGHT;
+    static constexpr unsigned int color_depth = COLOR_DEPTH;
+
     static_assert(COLOR_DEPTH >= 1 && COLOR_DEPTH <= 8 || COLOR_DEPTH == 24,
                   "Color depth must be 1-8 or 24");
 
