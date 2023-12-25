@@ -1,5 +1,3 @@
 #include "fibonacci.h"
 
-int main() {
-    return calculate_fibonacci_term(46);
-}
+int main() { return calculate_fibonacci_term(46); }

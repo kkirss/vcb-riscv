@@ -6,17 +6,19 @@
 
 constexpr unsigned int WORD_SIZE = 32;
 
-inline unsigned int frame_buffer_pointer __attribute__((used, section (".display_pointer")));
+inline unsigned int frame_buffer_pointer __attribute__((used, section(".display_pointer")));
 
-void display_frame_buffer(const unsigned int* frame_buffer);
+void display_frame_buffer(const unsigned int *frame_buffer);
 
-template<unsigned int WIDTH, unsigned int HEIGHT, unsigned int COLOR_DEPTH>
+template <unsigned int WIDTH, unsigned int HEIGHT, unsigned int COLOR_DEPTH>
 class Display {
 public:
-    static_assert(COLOR_DEPTH >= 1 && COLOR_DEPTH <= 8 || COLOR_DEPTH == 24, "Color depth must be 1-8 or 24");
+    static_assert(COLOR_DEPTH >= 1 && COLOR_DEPTH <= 8 || COLOR_DEPTH == 24,
+                  "Color depth must be 1-8 or 24");
 
     static constexpr unsigned int PIXELS_PER_WORD = WORD_SIZE / COLOR_DEPTH;
-    static_assert(WIDTH % PIXELS_PER_WORD == 0, "Display width must be a multiple of the number of pixels per word");
+    static_assert(WIDTH % PIXELS_PER_WORD == 0,
+                  "Display width must be a multiple of the number of pixels per word");
 
     static constexpr unsigned int PIXEL_MASK_LSB = (1 << COLOR_DEPTH) - 1;
     static constexpr unsigned int PIXEL_MASK_MSB = PIXEL_MASK_LSB << (WORD_SIZE - COLOR_DEPTH);
@@ -25,7 +27,10 @@ public:
     static inline unsigned int frame_buffer_a[FRAME_BUFFER_SIZE];
     static inline unsigned int frame_buffer_b[FRAME_BUFFER_SIZE]; // For future use
 
-    static void set_pixel_1b(const unsigned int x, const unsigned int y, const unsigned int new_color, unsigned int *frame_buffer) {
+    static void set_pixel_1b(const unsigned int x,
+                             const unsigned int y,
+                             const unsigned int new_color,
+                             unsigned int *frame_buffer) {
         // Calculate the sequential pixel number within the frame buffer
         const unsigned int sequential_pixel_number = x + (y * WIDTH);
 
@@ -50,11 +55,11 @@ public:
     }
 };
 
-template<typename T>
+template <typename T>
 struct is_display : std::false_type {};
 
-template<unsigned int WIDTH, unsigned int HEIGHT, unsigned int COLOR_DEPTH>
+template <unsigned int WIDTH, unsigned int HEIGHT, unsigned int COLOR_DEPTH>
 struct is_display<Display<WIDTH, HEIGHT, COLOR_DEPTH>> : std::true_type {};
 
-template<typename T>
+template <typename T>
 concept IsDisplay = is_display<T>::value;

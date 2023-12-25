@@ -1,6 +1,6 @@
+#include "simple_font.h"
 #include "vdisplay_driver.h"
 #include "vdisplay_sprite.h"
-#include "simple_font.h"
 
 constexpr unsigned int DISPLAY_WIDTH_PIXELS = 192;
 constexpr unsigned int DISPLAY_HEIGHT_PIXELS = 96;
@@ -20,7 +20,7 @@ constexpr SimpleFont::SpriteType HELLO_WORLD[] = {
     SimpleFont::R,
     SimpleFont::L,
     SimpleFont::D,
-    SimpleFont::EXCLAMATION_MARK
+    SimpleFont::EXCLAMATION_MARK,
 };
 
 int main() {
