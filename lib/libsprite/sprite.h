@@ -1,10 +1,13 @@
 #pragma once
 
+#include <array>
 #include <type_traits>
+
+using std::array;
 
 template <typename PIXEL_T, unsigned int WIDTH, unsigned int HEIGHT>
 struct Sprite {
-    const PIXEL_T pixels[HEIGHT][WIDTH];
+    const array<array<PIXEL_T, WIDTH>, HEIGHT> pixels;
     static const unsigned int width = WIDTH;
     static const unsigned int height = HEIGHT;
 };
