@@ -108,6 +108,7 @@ include_directories(src)
 
 add_subdirectory(lib/libsimple_font)
 add_subdirectory(lib/libsprite)
+add_subdirectory(lib/libvdisplay_driver)
 
 add_subdirectory(src/display_hello)
 add_subdirectory(src/fibonacci)
