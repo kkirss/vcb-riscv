@@ -13,6 +13,8 @@ void display_frame_buffer(const unsigned int* frame_buffer);
 template<unsigned int WIDTH, unsigned int HEIGHT, unsigned int COLOR_DEPTH>
 class Display {
 public:
+    static_assert(COLOR_DEPTH >= 1 && COLOR_DEPTH <= 8 || COLOR_DEPTH == 24, "Color depth must be 1-8 or 24");
+
     static constexpr unsigned int PIXELS_PER_WORD = WORD_SIZE / COLOR_DEPTH;
     static_assert(WIDTH % PIXELS_PER_WORD == 0, "Display width must be a multiple of the number of pixels per word");
 
