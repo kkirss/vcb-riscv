@@ -8,5 +8,6 @@ UseTab: Never
 
 BinPackArguments: false
 BinPackParameters: false
+PackConstructorInitializers: CurrentLine
 
 AlwaysBreakTemplateDeclarations: Yes
