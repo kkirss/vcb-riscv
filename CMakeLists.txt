@@ -43,8 +43,6 @@ add_compile_options(
     ${COMMON_OPTIONS}
     # Include debug symbols (can be used to add source code annotation to disassembly)
     -g
-    # Used to generate dependency files (.d)
-    -MD -MP
 )
 
 add_link_options(
