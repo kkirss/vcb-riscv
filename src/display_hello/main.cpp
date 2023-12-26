@@ -6,9 +6,11 @@ constexpr unsigned int DISPLAY_WIDTH_PIXELS = 192;
 constexpr unsigned int DISPLAY_HEIGHT_PIXELS = 96;
 constexpr unsigned int DISPLAY_COLOR_DEPTH = 1;
 
-typedef Display<DISPLAY_WIDTH_PIXELS, DISPLAY_HEIGHT_PIXELS, DISPLAY_COLOR_DEPTH> display;
 typedef DisplayBuffers<DISPLAY_WIDTH_PIXELS, DISPLAY_HEIGHT_PIXELS, DISPLAY_COLOR_DEPTH>
     display_buffers;
+
+constexpr DisplayConfig
+    display_config(DISPLAY_WIDTH_PIXELS, DISPLAY_HEIGHT_PIXELS, DISPLAY_COLOR_DEPTH);
 
 constexpr SimpleFont::SpriteType HELLO_WORLD[] = {
     SimpleFont::H,
@@ -30,7 +32,7 @@ int main() {
 
     unsigned int x = 1;
     for (const auto &sprite : HELLO_WORLD) {
-        draw_sprite<display>(x, 1, sprite, display_buffers::a);
+        draw_sprite(x, 1, sprite, display_config, display_buffers::a);
         x += SimpleFont::SpriteType::width + 1;
     }
 }
