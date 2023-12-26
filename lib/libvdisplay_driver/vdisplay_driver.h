@@ -11,6 +11,15 @@ inline unsigned int frame_buffer_pointer __attribute__((used, section(".display_
 void display_frame_buffer(const unsigned int *frame_buffer);
 
 template <unsigned int WIDTH, unsigned int HEIGHT, unsigned int COLOR_DEPTH>
+struct DisplayBuffers {
+    // TODO: Use PIXELS_PER_WORD to calculate the size of the frame buffer
+    static constexpr unsigned int FRAME_BUFFER_SIZE = (WIDTH * HEIGHT * COLOR_DEPTH) / WORD_SIZE;
+
+    static inline unsigned int a[FRAME_BUFFER_SIZE];
+    static inline unsigned int b[FRAME_BUFFER_SIZE]; // For future use
+};
+
+template <unsigned int WIDTH, unsigned int HEIGHT, unsigned int COLOR_DEPTH>
 class Display {
 public:
     static constexpr unsigned int width = WIDTH;
@@ -26,10 +35,6 @@ public:
 
     static constexpr unsigned int PIXEL_MASK_LSB = (1 << COLOR_DEPTH) - 1;
     static constexpr unsigned int PIXEL_MASK_MSB = PIXEL_MASK_LSB << (WORD_SIZE - COLOR_DEPTH);
-
-    static constexpr unsigned int FRAME_BUFFER_SIZE = (WIDTH * HEIGHT * COLOR_DEPTH) / WORD_SIZE;
-    static inline unsigned int frame_buffer_a[FRAME_BUFFER_SIZE];
-    static inline unsigned int frame_buffer_b[FRAME_BUFFER_SIZE]; // For future use
 
     static void draw_pixel(const unsigned int x,
                            const unsigned int y,
