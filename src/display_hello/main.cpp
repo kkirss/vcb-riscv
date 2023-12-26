@@ -26,9 +26,9 @@ constexpr SimpleFont::SpriteType HELLO_WORLD[] = {
 int main() {
     display_frame_buffer(display::frame_buffer_a);
 
-    unsigned int x = 0;
+    unsigned int x = 1;
     for (const auto &sprite : HELLO_WORLD) {
-        draw_sprite<display>(x, 0, sprite, display::frame_buffer_a);
+        draw_sprite<display>(x, 1, sprite, display::frame_buffer_a);
         x += SimpleFont::SpriteType::width + 1;
     }
 }
