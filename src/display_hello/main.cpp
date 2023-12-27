@@ -9,8 +9,7 @@ constexpr unsigned int DISPLAY_COLOR_DEPTH = 1;
 constexpr DisplayConfig
     display_config(DISPLAY_WIDTH_PIXELS, DISPLAY_HEIGHT_PIXELS, DISPLAY_COLOR_DEPTH);
 
-typedef DisplayBuffers<DISPLAY_WIDTH_PIXELS, DISPLAY_HEIGHT_PIXELS, DISPLAY_COLOR_DEPTH>
-    display_buffers;
+typedef DisplayBuffers<display_config> display_buffers;
 
 constexpr SimpleFont::SpriteType HELLO_WORLD[] = {
     SimpleFont::H,

@@ -33,10 +33,10 @@ struct DisplayConfig {
     //               "Display width must be a multiple of the number of pixels per word");
 };
 
-template <unsigned int WIDTH, unsigned int HEIGHT, unsigned int COLOR_DEPTH>
+template <DisplayConfig DISPLAY_CONFIG>
 struct DisplayBuffers {
-    static constexpr unsigned int pixels_per_word = WORD_SIZE / COLOR_DEPTH;
-    static constexpr unsigned int frame_buffer_size = (WIDTH * HEIGHT) / pixels_per_word;
+    static constexpr unsigned int frame_buffer_size =
+        (DISPLAY_CONFIG.width * DISPLAY_CONFIG.height) / DISPLAY_CONFIG.pixels_per_word;
 
     static inline unsigned int a[frame_buffer_size];
     static inline unsigned int b[frame_buffer_size]; // For future use
