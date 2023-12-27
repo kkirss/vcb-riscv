@@ -61,16 +61,14 @@ void draw_pixel(const unsigned int x,
                 const unsigned int y,
                 const unsigned int new_color,
                 FrameBuffer &frame_buffer) {
-    // Calculate the column and word index
-    const unsigned int column = x / display_config.pixels_per_word;
-    const unsigned int word_index = x % display_config.pixels_per_word;
+    const unsigned int word_index = x / display_config.pixels_per_word;
+    const unsigned int word_slot_index = x % display_config.pixels_per_word;
 
-    // Shift the mask and color to the correct position within the word
-    const unsigned int shift_amount = WORD_SIZE - (display_config.color_depth * (word_index + 1));
+    const unsigned int shift_amount =
+        WORD_SIZE - (display_config.color_depth * (word_slot_index + 1));
     const unsigned int pixel_mask = display_config.pixel_mask_lsb << shift_amount;
     const unsigned int shifted_color = new_color << shift_amount;
 
-    // Update the pixel word
-    unsigned int &pixel_word = frame_buffer[y][column];
+    unsigned int &pixel_word = frame_buffer[y][word_index];
     pixel_word = (pixel_word & ~pixel_mask) | shifted_color;
 }
