@@ -44,11 +44,11 @@ struct DisplayBuffers {
                   "Display width must be a multiple of the number of pixels per word");
 };
 
-static void draw_pixel(const unsigned int x,
-                       const unsigned int y,
-                       const unsigned int new_color,
-                       const DisplayConfig &display_config,
-                       unsigned int *frame_buffer) {
+template <DisplayConfig display_config>
+void draw_pixel(const unsigned int x,
+                const unsigned int y,
+                const unsigned int new_color,
+                unsigned int *frame_buffer) {
     // Calculate the sequential pixel number within the frame buffer
     const unsigned int sequential_pixel_number = x + (y * display_config.width);
 

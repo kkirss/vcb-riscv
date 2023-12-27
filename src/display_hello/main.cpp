@@ -31,7 +31,7 @@ int main() {
 
     unsigned int x = 1;
     for (const auto &sprite : HELLO_WORLD) {
-        draw_sprite(x, 1, sprite, display_config, display_buffers::a);
+        draw_sprite<display_config>(x, 1, sprite, display_buffers::a);
         x += SimpleFont::SpriteType::width + 1;
     }
 }
