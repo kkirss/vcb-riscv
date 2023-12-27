@@ -35,11 +35,11 @@ struct DisplayConfig {
 
 template <unsigned int WIDTH, unsigned int HEIGHT, unsigned int COLOR_DEPTH>
 struct DisplayBuffers {
-    // TODO: Use PIXELS_PER_WORD to calculate the size of the frame buffer
-    static constexpr unsigned int FRAME_BUFFER_SIZE = (WIDTH * HEIGHT * COLOR_DEPTH) / WORD_SIZE;
+    static constexpr unsigned int pixels_per_word = WORD_SIZE / COLOR_DEPTH;
+    static constexpr unsigned int frame_buffer_size = (WIDTH * HEIGHT) / pixels_per_word;
 
-    static inline unsigned int a[FRAME_BUFFER_SIZE];
-    static inline unsigned int b[FRAME_BUFFER_SIZE]; // For future use
+    static inline unsigned int a[frame_buffer_size];
+    static inline unsigned int b[frame_buffer_size]; // For future use
 };
 
 static void draw_pixel(const unsigned int x,
