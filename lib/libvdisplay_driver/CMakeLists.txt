@@ -1,10 +1,8 @@
 set(TARGET_NAME libvdisplay_driver)
 
-add_library(${TARGET_NAME} OBJECT
-    vdisplay_driver.cpp
-)
+add_library(${TARGET_NAME} INTERFACE)
 
-target_link_libraries(${TARGET_NAME} PRIVATE
+target_link_libraries(${TARGET_NAME} INTERFACE
     libsprite
 )
 

@@ -1,5 +1,9 @@
 #pragma once
 
+#include <array>
+
+using std::array;
+
 // Co-ordinates originate from top-left
 
 constexpr unsigned int WORD_SIZE = 32;
@@ -17,10 +21,14 @@ struct DisplayConfig {
     const unsigned int color_depth;
 
     const unsigned int pixels_per_word = WORD_SIZE / color_depth;
+    const unsigned int words_per_row = width / pixels_per_word;
 
     const unsigned int pixel_mask_lsb = (1 << color_depth) - 1;
     const unsigned int pixel_mask_msb = pixel_mask_lsb << (WORD_SIZE - color_depth);
 };
+
+#define FrameBufferRow array<unsigned int, display_config.words_per_row>
+#define FrameBuffer array<array<unsigned int, display_config.words_per_row>, display_config.height>
 
 template <DisplayConfig DISPLAY_CONFIG>
 struct DisplayBuffers {
@@ -29,8 +37,8 @@ struct DisplayBuffers {
     static constexpr unsigned int frame_buffer_size =
         (display_config.width * display_config.height) / display_config.pixels_per_word;
 
-    static inline unsigned int a[frame_buffer_size];
-    static inline unsigned int b[frame_buffer_size]; // For future use
+    static inline FrameBuffer a = {};
+    static inline FrameBuffer b = {};
 
     static_assert(display_config.color_depth >= 1 && display_config.color_depth <= 8 ||
                       display_config.color_depth == 24,
@@ -42,30 +50,27 @@ struct DisplayBuffers {
 
 inline unsigned int frame_buffer_pointer __attribute__((used, section(".display_pointer")));
 
-void display_frame_buffer(const unsigned int *frame_buffer);
+template <DisplayConfig display_config>
+void display_frame_buffer(FrameBuffer &frame_buffer) {
+    // Divide by 4 as VMEM address is in words
+    frame_buffer_pointer = reinterpret_cast<unsigned int>(&frame_buffer) >> 2;
+}
 
 template <DisplayConfig display_config>
 void draw_pixel(const unsigned int x,
                 const unsigned int y,
                 const unsigned int new_color,
-                unsigned int *frame_buffer) {
-    // Calculate the sequential pixel number within the frame buffer
-    const unsigned int sequential_pixel_number = x + (y * display_config.width);
+                FrameBuffer &frame_buffer) {
+    // Calculate the column and word index
+    const unsigned int column = x / display_config.pixels_per_word;
+    const unsigned int word_index = x % display_config.pixels_per_word;
 
-    // Calculate the word address within the frame buffer
-    const unsigned int mem_word_address = sequential_pixel_number / display_config.pixels_per_word;
-
-    // Get reference to the word where the pixel is located
-    unsigned int &pixel_word = frame_buffer[mem_word_address];
-
-    // Calculate the index of the pixel within the word
-    const unsigned int pixel_word_index = sequential_pixel_number % display_config.pixels_per_word;
-
-    // Calculate the masks for the pixel within the word (MSB is left-most pixel)
-    const unsigned int shift_amount =
-        WORD_SIZE - (display_config.color_depth * (pixel_word_index + 1));
+    // Shift the mask and color to the correct position within the word
+    const unsigned int shift_amount = WORD_SIZE - (display_config.color_depth * (word_index + 1));
     const unsigned int pixel_mask = display_config.pixel_mask_lsb << shift_amount;
     const unsigned int shifted_color = new_color << shift_amount;
 
+    // Update the pixel word
+    unsigned int &pixel_word = frame_buffer[y][column];
     pixel_word = (pixel_word & ~pixel_mask) | shifted_color;
 }
