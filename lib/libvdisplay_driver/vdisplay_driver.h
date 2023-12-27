@@ -8,15 +8,6 @@ inline unsigned int frame_buffer_pointer __attribute__((used, section(".display_
 
 void display_frame_buffer(const unsigned int *frame_buffer);
 
-template <unsigned int WIDTH, unsigned int HEIGHT, unsigned int COLOR_DEPTH>
-struct DisplayBuffers {
-    // TODO: Use PIXELS_PER_WORD to calculate the size of the frame buffer
-    static constexpr unsigned int FRAME_BUFFER_SIZE = (WIDTH * HEIGHT * COLOR_DEPTH) / WORD_SIZE;
-
-    static inline unsigned int a[FRAME_BUFFER_SIZE];
-    static inline unsigned int b[FRAME_BUFFER_SIZE]; // For future use
-};
-
 struct DisplayConfig {
     constexpr DisplayConfig(const unsigned int width,
                             const unsigned int height,
@@ -40,6 +31,15 @@ struct DisplayConfig {
     //
     // static_assert(WIDTH % PIXELS_PER_WORD == 0,
     //               "Display width must be a multiple of the number of pixels per word");
+};
+
+template <unsigned int WIDTH, unsigned int HEIGHT, unsigned int COLOR_DEPTH>
+struct DisplayBuffers {
+    // TODO: Use PIXELS_PER_WORD to calculate the size of the frame buffer
+    static constexpr unsigned int FRAME_BUFFER_SIZE = (WIDTH * HEIGHT * COLOR_DEPTH) / WORD_SIZE;
+
+    static inline unsigned int a[FRAME_BUFFER_SIZE];
+    static inline unsigned int b[FRAME_BUFFER_SIZE]; // For future use
 };
 
 static void draw_pixel(const unsigned int x,
