@@ -4,10 +4,6 @@
 
 constexpr unsigned int WORD_SIZE = 32;
 
-inline unsigned int frame_buffer_pointer __attribute__((used, section(".display_pointer")));
-
-void display_frame_buffer(const unsigned int *frame_buffer);
-
 struct DisplayConfig {
     constexpr DisplayConfig(const unsigned int width,
                             const unsigned int height,
@@ -43,6 +39,10 @@ struct DisplayBuffers {
     static_assert(display_config.width % display_config.pixels_per_word == 0,
                   "Display width must be a multiple of the number of pixels per word");
 };
+
+inline unsigned int frame_buffer_pointer __attribute__((used, section(".display_pointer")));
+
+void display_frame_buffer(const unsigned int *frame_buffer);
 
 template <DisplayConfig display_config>
 void draw_pixel(const unsigned int x,
