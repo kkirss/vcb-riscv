@@ -28,17 +28,19 @@ struct DisplayConfig {
 
 template <DisplayConfig DISPLAY_CONFIG>
 struct DisplayBuffers {
+    static constexpr DisplayConfig display_config = DISPLAY_CONFIG;
+
     static constexpr unsigned int frame_buffer_size =
-        (DISPLAY_CONFIG.width * DISPLAY_CONFIG.height) / DISPLAY_CONFIG.pixels_per_word;
+        (display_config.width * display_config.height) / display_config.pixels_per_word;
 
     static inline unsigned int a[frame_buffer_size];
     static inline unsigned int b[frame_buffer_size]; // For future use
 
-    static_assert(DISPLAY_CONFIG.color_depth >= 1 && DISPLAY_CONFIG.color_depth <= 8 ||
-                      DISPLAY_CONFIG.color_depth == 24,
+    static_assert(display_config.color_depth >= 1 && display_config.color_depth <= 8 ||
+                      display_config.color_depth == 24,
                   "Color depth must be 1-8 or 24");
 
-    static_assert(DISPLAY_CONFIG.width % DISPLAY_CONFIG.pixels_per_word == 0,
+    static_assert(display_config.width % display_config.pixels_per_word == 0,
                   "Display width must be a multiple of the number of pixels per word");
 };
 
