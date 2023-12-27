@@ -24,13 +24,6 @@ struct DisplayConfig {
 
     const unsigned int pixel_mask_lsb = (1 << color_depth) - 1;
     const unsigned int pixel_mask_msb = pixel_mask_lsb << (WORD_SIZE - color_depth);
-
-    // TODO: Re-add these assertions
-    // static_assert(COLOR_DEPTH >= 1 && COLOR_DEPTH <= 8 || COLOR_DEPTH == 24,
-    //               "Color depth must be 1-8 or 24");
-    //
-    // static_assert(WIDTH % PIXELS_PER_WORD == 0,
-    //               "Display width must be a multiple of the number of pixels per word");
 };
 
 template <DisplayConfig DISPLAY_CONFIG>
@@ -40,6 +33,13 @@ struct DisplayBuffers {
 
     static inline unsigned int a[frame_buffer_size];
     static inline unsigned int b[frame_buffer_size]; // For future use
+
+    static_assert(DISPLAY_CONFIG.color_depth >= 1 && DISPLAY_CONFIG.color_depth <= 8 ||
+                      DISPLAY_CONFIG.color_depth == 24,
+                  "Color depth must be 1-8 or 24");
+
+    static_assert(DISPLAY_CONFIG.width % DISPLAY_CONFIG.pixels_per_word == 0,
+                  "Display width must be a multiple of the number of pixels per word");
 };
 
 static void draw_pixel(const unsigned int x,
