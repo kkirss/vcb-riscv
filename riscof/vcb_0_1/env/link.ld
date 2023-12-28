@@ -27,10 +27,12 @@ __STACK_TOP__ = DEFINED( __STACK_TOP__ ) ? __STACK_TOP__ : __DISPLAY_POINTER_ADD
 # Note: There is a 16 byte pad at the top of the stack, just in case
 __STACK_SIZE__ = DEFINED( __STACK_SIZE__ ) ? __STACK_SIZE__ : 4K;
 
+__VINPUT_ADDRESS__ = __RAM_SIZE__;
 MEMORY
 {
     RAM (rwx) : ORIGIN = 0x0, LENGTH = __RAM_SIZE__
     DISPLAY_POINTER (rw) : ORIGIN = __DISPLAY_POINTER_ADDRESS__, LENGTH = WORD_SIZE
+    VIRTUAL_INPUT (rw) : ORIGIN = __VINPUT_ADDRESS__, LENGTH = WORD_SIZE
 }
 
 SECTIONS
@@ -81,6 +83,11 @@ SECTIONS
         PROVIDE(__DISPLAY_POINTER_ADDRESS__ = .);
         KEEP (*(.display_pointer));
     } > DISPLAY_POINTER AT> RAM
+
+    .virtual_input __VINPUT_ADDRESS__ : {
+        PROVIDE(__VINPUT_ADDRESS__ = .);
+        KEEP (*(.virtual_input));
+    } > VIRTUAL_INPUT
 
     _end = .;
 }
