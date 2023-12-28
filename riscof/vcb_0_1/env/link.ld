@@ -82,7 +82,7 @@ SECTIONS
         . += STACK_PAD;
     } > RAM
 
-    .display_pointer : {
+    .display_pointer __DISPLAY_POINTER_ADDRESS__ : {
         PROVIDE(__DISPLAY_POINTER_ADDRESS__ = .);
         KEEP (*(.display_pointer));
     } > DISPLAY_POINTER AT> RAM
