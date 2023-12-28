@@ -3,7 +3,10 @@
 #include "sprite.h"
 
 namespace SimpleFont {
-typedef Sprite<4, 5> SpriteType;
+constexpr unsigned int SPRITE_WIDTH = 4;
+constexpr unsigned int SPRITE_HEIGHT = 5;
+
+typedef Sprite<SPRITE_WIDTH, SPRITE_HEIGHT> SpriteType;
 
 inline constexpr SpriteType A = {{{
     {0, 1, 1, 0},
