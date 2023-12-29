@@ -59,6 +59,8 @@ add_link_options(
     -Wl,--defsym=__STACK_SIZE__=${STACK_SIZE}
     -Wl,--defsym=__STACK_TOP__=${STACK_TOP}
     -Wl,--gc-sections
+    # Set the text and data sections to be readable and writable. Also, do not page-align the data segment, and disable linking against shared libraries.
+    -Wl,--omagic
     -Wl,--no-warn-rwx-segment
 )
 
