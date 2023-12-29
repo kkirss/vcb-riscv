@@ -72,7 +72,7 @@ function(add_disassembly target)
         COMMENT "Disassembling ${target}"
         DEPENDS ${target}
         OUTPUT ${disassembly_output_path}
-        COMMAND ${CMAKE_OBJDUMP} --disassemble --source $<TARGET_FILE:${target}> > ${disassembly_output_path}
+        COMMAND ${CMAKE_OBJDUMP} --disassemble --demangle --source $<TARGET_FILE:${target}> > ${disassembly_output_path}
     )
     add_custom_target("disassemble_${target}" ALL
         DEPENDS ${disassembly_output_path}
