@@ -13,6 +13,7 @@ target_link_libraries(${TARGET_NAME} PRIVATE
 )
 
 set_target_properties(${TARGET_NAME} PROPERTIES
+    SUFFIX ".elf"
     LINK_DEPENDS ${LINKER_SCRIPT}
 )
 

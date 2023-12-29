@@ -18,7 +18,7 @@ It includes labels for everything and should be relatively straight-forward to u
 
 There is a VCB file for a RISC-V CPU - `cpu-v0_1.vcb`.
 
-See [CPU-V0_1.md](CPU-V0_1.md) for more details. 
+See [CPU-V0_1.md](CPU-V0_1.md) for more details.
 
 ## Software
 
@@ -32,10 +32,11 @@ If you're on Windows, you can use WSL (Windows Subsystem for Linux) to run every
 (You can run VCB itself in Windows.)
 
 You need to have the following installed:
+
 * CMake (already installed on most systems)
 * Make (already installed on most systems)
 * gcc (riscv64-unknown-elf-gcc)
-  * Run `setup/ubuntu-riscv-gnu-toolchain.sh` for easy setup on Ubuntu.
+    * Run `setup/ubuntu-riscv-gnu-toolchain.sh` for easy setup on Ubuntu.
 
 Note: Everything has been tested on Ubuntu (WSL).
 But it should work on most Linux distros and possibly on Mac.
@@ -51,6 +52,7 @@ Contributions to add support for this are especially welcome.
 ### Quickstart
 
 To compile everything:
+
 ```bash
 cmake .
 make
@@ -66,18 +68,20 @@ You'll need to re-run this if you change the `CMakeLists.txt` files.
 ### Compilation
 
 Running `make` will compile all code in the `src` folder to:
+
 * `build/<program>.vcbmem` - VCB VMEM file
-  * VCB 'VMEM Editor' tab has an 'Edit VMEM externally' button (bottom left) to load this into VMEM.
-* `build/<program>` - Main ELF executable
+    * VCB 'VMEM Editor' tab has an 'Edit VMEM externally' button (bottom left) to load this into VMEM.
+* `build/<program>.elf` - Main ELF executable
 * `build/<program>.elf.d` - RISC-V assembly
-  * Disassembled from the main ELF executable.
-  * Effectively, the exact assembly used for the `.vcbmem`.
+    * Disassembled from the main ELF executable.
+    * Effectively, the exact assembly used for the `.vcbmem`.
 
 Run `make help` for all available targets.
 
 ### Using vcbmem files
 
 To make it easier to use the `.vcbmem` files, you can run:
+
 ```bash
 make cpu_<program>
 ```
@@ -87,7 +91,8 @@ This will compile the program and copy the .vcbmem file next to the CPU VCB proj
 
 ## Tests
 
-Tests can be run semi-automatically for the CPU using [RISCOF - The RISC-V Compatibility Framework](https://riscof.readthedocs.io/en/stable/intro.html).
+Tests can be run semi-automatically for the CPU
+using [RISCOF - The RISC-V Compatibility Framework](https://riscof.readthedocs.io/en/stable/intro.html).
 
 Each test is run on a reference CPU (Spike) and the VCB CPU (i.e. DUT - Device Under Test).
 The tests write to a specific memory area, resulting in a 'signature'.
@@ -96,22 +101,23 @@ The signatures are compared to determine if the test passed or failed.
 ### Dependencies
 
 You need to have the following installed:
+
 * CMake (already installed on most systems)
 * Make (already installed on most systems)
 * Python 3 & pip (already installed on most systems)
 * gcc (riscv64-unknown-elf-gcc)
-  * Run `setup/ubuntu-riscv-gnu-toolchain.sh` for easy setup on Ubuntu.
+    * Run `setup/ubuntu-riscv-gnu-toolchain.sh` for easy setup on Ubuntu.
 * [RISCOF](https://riscof.readthedocs.io/en/stable/installation.html#install-riscof)
-  * Run `setup/ubuntu-riscof.sh` for easy setup on Ubuntu.
+    * Run `setup/ubuntu-riscof.sh` for easy setup on Ubuntu.
 * [Spike](https://github.com/riscv-software-src/riscv-isa-sim#build-steps)
-  * Run `setup/ubuntu-spike.sh` for easy setup on Ubuntu.
+    * Run `setup/ubuntu-spike.sh` for easy setup on Ubuntu.
 
 You'll also need to run `cmake .` once to generate the `Makefile`.
 
 #### Testing in VCB
 
 **NB:** You need to enable persistent VMEM in VCB.
-You can do this by setting VMEM Settings -> Persistent Memory to be `0x0` to `0xfffff` 
+You can do this by setting VMEM Settings -> Persistent Memory to be `0x0` to `0xfffff`
 
 During a test run, the script will handle all the compilation and .vcbmem file management.
 
@@ -121,6 +127,7 @@ During a test run, GNOME Terminal windows are opened with instructions.
 ### Running all tests
 
 To run all tests:
+
 ```
 make riscof_run_all
 ```
@@ -131,11 +138,13 @@ As each of them requires a manual step, it might be better to run them individua
 ### Running a specific test
 
 To run a specific test, first generate separate test files:
+
 ```
 make riscof_separate_tests
 ```
 
 Then run the test:
+
 ```
 TEST_NAME=<test> make riscof_run
 ```
@@ -150,7 +159,8 @@ The signatures files are stored in `riscof/riscof_work/rv32i_m/I/src/*/dut|ref/*
 
 #### Disassembly
 
-To get a better idea of what the test are doing, you can then view the disassembled assembly files in `riscof/riscof_work/rv32i_m/I/src/*/dut/my.elf.d`.
+To get a better idea of what the test are doing, you can then view the disassembled assembly files
+in `riscof/riscof_work/rv32i_m/I/src/*/dut/my.elf.d`.
 (This is the exact assembly used for the `.vcbmem`.)
 
 #### Source code

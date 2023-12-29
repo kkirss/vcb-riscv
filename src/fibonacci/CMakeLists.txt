@@ -7,6 +7,7 @@ add_executable(${TARGET_NAME}
 )
 
 set_target_properties(${TARGET_NAME} PROPERTIES
+    SUFFIX ".elf"
     LINK_DEPENDS ${LINKER_SCRIPT}
 )
 
