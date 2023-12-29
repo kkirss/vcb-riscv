@@ -110,6 +110,7 @@ add_subdirectory(lib/libsimple_font)
 add_subdirectory(lib/libsprite)
 add_subdirectory(lib/libvdisplay_driver)
 add_subdirectory(lib/libvdisplay_sprite)
+add_subdirectory(lib/libvinput)
 
 add_subdirectory(src/display_hello)
 add_subdirectory(src/fibonacci)
