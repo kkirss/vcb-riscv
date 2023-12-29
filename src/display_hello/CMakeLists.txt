@@ -12,5 +12,9 @@ target_link_libraries(${TARGET_NAME} PRIVATE
     libvdisplay_sprite
 )
 
+set_target_properties(${TARGET_NAME} PROPERTIES
+    LINK_DEPENDS ${LINKER_SCRIPT}
+)
+
 add_disassembly(${TARGET_NAME})
 add_vcbmem(${TARGET_NAME})
