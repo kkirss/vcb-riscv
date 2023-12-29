@@ -43,8 +43,8 @@ SECTIONS
     . = ORIGIN(RAM);
 
     # The .init section is used for code that needs to be run before main (e.g. set the stack pointer)
-    .text.init : {
-        KEEP (*(SORT_NONE(.text.init)))
+    .init : {
+        KEEP (*(SORT_NONE(.init)))
     } > RAM
 
     .text : {

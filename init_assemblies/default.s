@@ -1,4 +1,4 @@
-.section .text.init
+.section .init
 .global _start
 .type _start,@function
 
