@@ -5,7 +5,7 @@ set(CMAKE_OBJCOPY "${TOOLCHAIN_PREFIX}-objcopy")
 set(CMAKE_OBJDUMP "${TOOLCHAIN_PREFIX}-objdump")
 
 cmake_minimum_required(VERSION 3.13)
-project(vcb-riscv VERSION 1.0)
+project(vcb-riscv VERSION 1.0 LANGUAGES CXX C)
 
 set(CPU_NAME "cpu-v0_1")
 
