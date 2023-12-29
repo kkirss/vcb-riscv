@@ -5,8 +5,6 @@ OUTPUT_ARCH(riscv)
 
 ENTRY(_start)
 
-STACK_PAD = 16;
-
 # Use variables to allow configuring from the command line
 
 # Size of RAM (in bytes)
@@ -22,7 +20,6 @@ __STACK_TOP__ = DEFINED( __STACK_TOP__ ) ? __STACK_TOP__ : __DISPLAY_POINTER_ADD
 # Size of the stack in bytes
 # Note: This doesn't implement any stack overflow checking.
 #       This just ensures this amount of memory is reserved for the stack.
-# Note: There is a 16 byte pad at the top of the stack, just in case
 __STACK_SIZE__ = DEFINED( __STACK_SIZE__ ) ? __STACK_SIZE__ : 4K;
 
 __VINPUT_ADDRESS__ = __RAM_SIZE__;
@@ -75,10 +72,9 @@ SECTIONS
   .stack __STACK_TOP__ - __STACK_SIZE__ : {
     FILL(0);
     PROVIDE(__STACK_START__ = .);
-    . += (__STACK_SIZE__ - STACK_PAD);
+    . += (__STACK_SIZE__);
     PROVIDE(__C_STACK_TOP__ = .);
     PROVIDE(__STACK_END__ = .);
-    . += STACK_PAD;
   } > RAM
 
   .display_pointer __DISPLAY_POINTER_ADDRESS__ : {
