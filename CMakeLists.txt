@@ -1,11 +1,12 @@
 set(TOOLCHAIN_PREFIX "/opt/riscv/bin/riscv64-unknown-elf")
 set(CMAKE_C_COMPILER "${TOOLCHAIN_PREFIX}-gcc")
 set(CMAKE_CXX_COMPILER "${TOOLCHAIN_PREFIX}-g++")
+set(CMAKE_ASM_COMPILER ${CMAKE_CXX_COMPILER})
 set(CMAKE_OBJCOPY "${TOOLCHAIN_PREFIX}-objcopy")
 set(CMAKE_OBJDUMP "${TOOLCHAIN_PREFIX}-objdump")
 
 cmake_minimum_required(VERSION 3.13)
-project(vcb-riscv VERSION 1.0 LANGUAGES CXX C)
+project(vcb-riscv VERSION 1.0 LANGUAGES CXX C ASM)
 
 set(CPU_NAME "cpu-v0_1")
 
@@ -45,12 +46,14 @@ add_compile_options(
     -g
 )
 
+SET(CMAKE_ASM_FLAGS
+)
+
 add_link_options(
     ${COMMON_OPTIONS}
     -nostartfiles
     -static
     -T ${LINKER_SCRIPT}
-    -D__riscv_ ${INIT_ASSEMBLY}
     -Wl,--defsym=__RAM_SIZE__=${RAM_SIZE}
     -Wl,--defsym=__DISPLAY_POINTER_ADDRESS__=${DISPLAY_POINTER_ADDRESS}
     -Wl,--defsym=__STACK_SIZE__=${STACK_SIZE}
