@@ -59,10 +59,16 @@ void draw_hello_world() {
 }
 
 void on_key_press(const Key key) {
-    const SimpleFont::SpriteType *sprite = SimpleFont::get_key_sprite(key);
+    switch (key) {
+    case Keys::BACKSPACE:
+        decrement_cursor(sprite_grid);
+        break;
+    default:
+        const SimpleFont::SpriteType *sprite = SimpleFont::get_key_sprite(key);
 
-    if (sprite != nullptr) {
-        draw_sprite<display_config>(sprite_grid, *sprite, display_buffers::a);
+        if (sprite != nullptr) {
+            draw_sprite<display_config>(sprite_grid, *sprite, display_buffers::a);
+        }
     }
 }
 
