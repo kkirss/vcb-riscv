@@ -260,6 +260,27 @@ inline constexpr SpriteType _9 = {{{
     {0, 0, 0, 1},
     {1, 1, 1, 0},
 }}};
+inline constexpr SpriteType MINUS = {{{
+    {0, 0, 0, 0},
+    {0, 0, 0, 0},
+    {1, 1, 1, 1},
+    {0, 0, 0, 0},
+    {0, 0, 0, 0},
+}}};
+inline constexpr SpriteType COMMA = {{{
+    {0, 0, 0, 0},
+    {0, 0, 0, 0},
+    {0, 0, 0, 0},
+    {0, 1, 0, 0},
+    {1, 0, 0, 0},
+}}};
+inline constexpr SpriteType PERIOD = {{{
+    {0, 0, 0, 0},
+    {0, 0, 0, 0},
+    {0, 0, 0, 0},
+    {0, 0, 0, 0},
+    {0, 1, 0, 0},
+}}};
 inline constexpr SpriteType SPACE = {{{
     {0, 0, 0, 0},
     {0, 0, 0, 0},
