@@ -17,21 +17,6 @@ constexpr DisplayConfig
 
 typedef DisplayBuffers<display_config> display_buffers;
 
-constexpr SimpleFont::SpriteType HELLO_WORLD[] = {
-    SimpleFont::H,
-    SimpleFont::E,
-    SimpleFont::L,
-    SimpleFont::L,
-    SimpleFont::O,
-    SimpleFont::SPACE,
-    SimpleFont::W,
-    SimpleFont::O,
-    SimpleFont::R,
-    SimpleFont::L,
-    SimpleFont::D,
-    SimpleFont::EXCLAMATION_MARK,
-};
-
 constexpr unsigned int GRID_X = 1;
 constexpr unsigned int GRID_Y = 1;
 constexpr unsigned int GRID_PADDING_X = 1;
@@ -52,8 +37,20 @@ SpriteGrid<GRID_WIDTH,
            GRID_PADDING_Y>
     sprite_grid;
 
-void draw_hello_world() {
-    for (const auto &sprite : HELLO_WORLD) {
+constexpr array VCB_RISCV = {
+    SimpleFont::V,
+    SimpleFont::C,
+    SimpleFont::B,
+    SimpleFont::MINUS,
+    SimpleFont::R,
+    SimpleFont::I,
+    SimpleFont::S,
+    SimpleFont::C,
+    SimpleFont::V,
+};
+
+void draw_vcb_riscv() {
+    for (const auto &sprite : VCB_RISCV) {
         draw_sprite<display_config>(sprite_grid, sprite, display_buffers::a);
     }
 }
@@ -79,7 +76,9 @@ void on_key_press(const Key key) {
 int main() {
     display_frame_buffer<display_config>(display_buffers::a);
 
-    draw_hello_world();
+    draw_vcb_riscv();
+    move_cursor_new_line(sprite_grid);
+    move_cursor_new_line(sprite_grid);
 
     Key last_key = Keys::NONE;
 
