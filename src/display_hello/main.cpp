@@ -8,8 +8,8 @@ using namespace VInputKeys;
 
 inline volatile unsigned int BREAKPOINT __attribute__((used, section(".breakpoint")));
 
-constexpr unsigned int DISPLAY_WIDTH_PIXELS = 192;
-constexpr unsigned int DISPLAY_HEIGHT_PIXELS = 96;
+constexpr unsigned int DISPLAY_WIDTH_PIXELS = 256;
+constexpr unsigned int DISPLAY_HEIGHT_PIXELS = 256;
 constexpr unsigned int DISPLAY_COLOR_DEPTH = 1;
 
 constexpr DisplayConfig
