@@ -63,6 +63,10 @@ void on_key_press(const Key key) {
     case Keys::BACKSPACE:
         decrement_cursor(sprite_grid);
         break;
+    case Keys::ENTER:
+    case Keys::KEYPAD_ENTER:
+        move_cursor_new_line(sprite_grid);
+        break;
     default:
         const SimpleFont::SpriteType *sprite = SimpleFont::get_key_sprite(key);
 

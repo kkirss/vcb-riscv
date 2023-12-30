@@ -51,15 +51,20 @@ struct SpriteGrid {
 };
 
 template <SpriteGridTemplTypes>
+void move_cursor_new_line(SpriteGridT &sprite_grid) {
+    if (sprite_grid.cursor_y < sprite_grid.grid_height - 1) {
+        sprite_grid.cursor_x = 0;
+        ++sprite_grid.cursor_y;
+    }
+}
+
+template <SpriteGridTemplTypes>
 void increment_cursor(SpriteGridT &sprite_grid) {
     if (sprite_grid.cursor_x < sprite_grid.grid_width - 1) {
         ++sprite_grid.cursor_x;
         return;
     }
-    if (sprite_grid.cursor_y < sprite_grid.grid_height - 1) {
-        sprite_grid.cursor_x = 0;
-        ++sprite_grid.cursor_y;
-    }
+    move_cursor_new_line(sprite_grid);
 }
 
 template <SpriteGridTemplTypes>
