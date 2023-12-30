@@ -10,6 +10,7 @@ target_link_libraries(${TARGET_NAME} PRIVATE
     libsprite
     libvdisplay_driver
     libvdisplay_sprite
+    libvinput
 )
 
 set_target_properties(${TARGET_NAME} PROPERTIES

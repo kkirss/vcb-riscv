@@ -1,6 +1,10 @@
 #include "simple_font.h"
+#include "simple_font_key_map.h"
 #include "vdisplay_driver.h"
 #include "vdisplay_sprite.h"
+#include "vinput_driver.h"
+
+using namespace VInputKeys;
 
 inline volatile unsigned int BREAKPOINT __attribute__((used, section(".breakpoint")));
 
@@ -48,10 +52,42 @@ SpriteGrid<GRID_WIDTH,
            GRID_PADDING_Y>
     sprite_grid;
 
+void draw_hello_world() {
+    for (const auto &sprite : HELLO_WORLD) {
+        draw_sprite<display_config>(sprite_grid, sprite, display_buffers::a);
+    }
+}
+
+void on_key_press(const Key key) {
+    const SimpleFont::SpriteType *sprite = SimpleFont::get_key_sprite(key);
+
+    if (sprite != nullptr) {
+        draw_sprite<display_config>(sprite_grid, *sprite, display_buffers::a);
+    }
+}
+
 int main() {
     display_frame_buffer<display_config>(display_buffers::a);
 
-    for (const auto &sprite : HELLO_WORLD) {
-        draw_sprite<display_config>(sprite_grid, sprite, display_buffers::a);
+    draw_hello_world();
+
+    Key last_key = Keys::NONE;
+
+    while (true) {
+        const Key pressed_key = read_virtual_input_key();
+
+        if (pressed_key == last_key) {
+            continue;
+        }
+        last_key = pressed_key;
+
+        switch (pressed_key) {
+        case Keys::ESCAPE:
+            break;
+        case Keys::NONE:
+            continue;
+        default:
+            on_key_press(pressed_key);
+        }
     }
 }
