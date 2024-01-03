@@ -1,10 +1,10 @@
 #pragma once
 
-#include <optional>
+#include <array>
 
 #include "vinput_key.h"
 
-using std::optional;
+using std::array;
 
 namespace VInputKeys {
 
