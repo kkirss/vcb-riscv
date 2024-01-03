@@ -20,3 +20,4 @@ set_target_properties(${TARGET_NAME} PROPERTIES
 
 add_disassembly(${TARGET_NAME})
 add_vcbmem(${TARGET_NAME})
+add_cpu_config(${TARGET_NAME} ${CMAKE_CURRENT_SOURCE_DIR}/vcb_config.json)

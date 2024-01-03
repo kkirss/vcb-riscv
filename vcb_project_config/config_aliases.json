@@ -1,0 +1,34 @@
+{
+    "vdisplay_position_x": [
+        "vdisplay_settings",
+        0
+    ],
+    "vdisplay_position_y": [
+        "vdisplay_settings",
+        1
+    ],
+    "vdisplay_resolution_x": [
+        "vdisplay_settings",
+        2
+    ],
+    "vdisplay_resolution_y": [
+        "vdisplay_settings",
+        3
+    ],
+    "vdisplay_scale_x": [
+        "vdisplay_settings",
+        4
+    ],
+    "vdisplay_scale_y": [
+        "vdisplay_settings",
+        5
+    ],
+    "vdisplay_address_number": [
+        "vdisplay_settings",
+        6
+    ],
+    "vdisplay_address_bits": [
+        "vdisplay_settings",
+        7
+    ]
+}

@@ -1,0 +1,12 @@
+{
+    "vdisplay_resolution_x": 256,
+    "vdisplay_resolution_y": 256,
+    "vdisplay_scale_x": 4,
+    "vdisplay_scale_y": 4,
+    "vdisplay_color_depth": 1,
+    "vdisplay_direction": 0,
+    "vdisplay_palette": [
+        "000000",
+        "ffffff"
+    ]
+}

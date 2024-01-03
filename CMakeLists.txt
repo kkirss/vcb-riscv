@@ -104,6 +104,13 @@ function(add_vcbmem target)
     )
 endfunction()
 
+# Function to add target for updating .vcb project file
+function(add_cpu_config target config_path)
+    add_custom_target("cpu_config_${target}" ALL
+        COMMAND ${CMAKE_SOURCE_DIR}/vcb_project_config/update_vcb_project.sh ${CMAKE_SOURCE_DIR}/${CPU_NAME}.vcb ${config_path}
+    )
+endfunction()
+
 include_directories(src)
 
 add_subdirectory(lib/libsimple_font)

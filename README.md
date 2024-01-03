@@ -89,6 +89,19 @@ make cpu_<program>
 This will compile the program and copy the .vcbmem file next to the CPU VCB project.
 (I.e. `build/<program>.vcbmem` to `<CPU_NAME>.vcbmem`. CPU_NAME is defined in `CMakelists.txt`.)
 
+### Configuring VCB project
+
+Some programs may assume the VCB project to be configured a certain way.
+(For example, to have a specific virtual display size.)
+
+To automatically configure the VCB project, you can run:
+
+```bash
+make cpu_config_<program>
+```
+
+See `vcb_project_config` folder for details.
+
 ## Tests
 
 Tests can be run semi-automatically for the CPU
