@@ -12,12 +12,14 @@ Only significantly different instructions are listed.
 ### Jump targets
 
 All jump targets:
+
 * PC+imm (JAL, BRANCH)
 * rs1+imm (JALR)
 
 ### Register write sources
 
 All register write sources:
+
 * rs1#r2 (OP)
 * rs1#imm (OP-IMM)
 * load-data (STORE)
@@ -33,6 +35,7 @@ Thus, there's a need to choose which operation the ALU is used for.
 ### Multiple operation instructions
 
 Instructions that require multiple operations:
+
 * JAL: PC+imm & PC+4
 * JALR: r1+imm & PC+4
 * BRANCH: r1?r2 & PC+imm
@@ -43,11 +46,13 @@ Choice primarily depends on the BRANCH instruction.
 Either r1?r2 or PC+imm needs a separate component.
 
 Separate r1?r2 advantages:
+
 1. Could potentially be faster than an adder?
-   * This could potentially allow for EX stage to be faster.
-     This depends on timing of various pieces though.
+    * This could potentially allow for EX stage to be faster.
+      This depends on timing of various pieces though.
 
 Separate PC+imm advantages:
+
 1. Could potentially be calculated in the ID stage already.
-   * This could allow JAL to jump faster, reducing pipeline bubbles.
+    * This could allow JAL to jump faster, reducing pipeline bubbles.
 2. Doesn't require a subtractor.
