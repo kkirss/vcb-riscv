@@ -159,7 +159,7 @@ make riscof_separate_tests
 Then run the test:
 
 ```
-TEST_NAME=<test> make riscof_run
+make -e TEST_NAME=<test> riscof_run
 ```
 
 ### Test results

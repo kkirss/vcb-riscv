@@ -67,5 +67,5 @@ add_custom_target(riscof_run
     DEPENDS ${RISCOF_SEPARATE_TEST_FOLDER}
     COMMAND rm -rf ${RISCOF_WORK_DIR}/**/**/src/$ENV{TEST_NAME}*/dut
     COMMAND rm -rf ${RISCOF_WORK_DIR}/**/**/src/$ENV{TEST_NAME}*/ref
-    COMMAND riscof --verbose debug run ${RISCOF_FLAGS} --testfile=${RISCOF_SEPARATE_TEST_FOLDER}/$ENV{TEST_NAME}.yaml --no-browser
+    COMMAND riscof --verbose debug run ${RISCOF_FLAGS} --testfile=${RISCOF_SEPARATE_TEST_FOLDER}/$(TEST_NAME).yaml --no-browser
 )
