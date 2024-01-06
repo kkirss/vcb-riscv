@@ -6,7 +6,7 @@ This document describes the v0.1 CPU project - `cpu-v0_1.vcb`.
 
 * RISC-V 32-bit integer ISA (RV32I)
 * 5 stage pipeline with forwarding
-* 11-tick clock
+* 10-tick clock
 * 32 registers
 * VMEM for instruction & data memory
 
@@ -212,4 +212,4 @@ The critical path is BRANCH instruction in the EX stage:
     * 1 tick concurrently for pipeline stage clock controller
 7. 1 tick for pipeline stage store
 
-Total: ~~10 ticks~~ 11 ticks (temporarily due to bottleneck in PC adders but will use ALU to avoid it)
+Total: 10 ticks
