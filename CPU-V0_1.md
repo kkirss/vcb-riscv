@@ -64,7 +64,7 @@ There's [a thread about this project in the VCB Discord community](https://disco
 All multiplexers required:
 
 * PC-SRC
-    * 1: j-target
+    * 1: alu-out / j-target
     * 0: PC+4
 * ALU-I2-SRC
     * 11: EX-OUT-DATA
@@ -74,13 +74,17 @@ All multiplexers required:
 * ALU-I1-SRC
     * 11: EX-OUT-DATA
     * 10: WRITE-DATA
-    * 01: -
+    * 01: PC
     * 00: r1
-* J-TARGET-SRC:
-    * 1: PC+imm
-    * 2: alu-out
+* R2-SRC
+    * 11: EX-OUT-DATA
+    * 10: WRITE-DATA
+    * 00: r2
+* R1-SRC
+    * 11: EX-OUT-DATA
+    * 10: WRITE-DATA
+    * 00: r1
 * EX-OUT-SRC:
-    * 11: PC+imm
     * 10: PC+4
     * 01: imm
     * 00: alu-out
@@ -99,6 +103,8 @@ The CPU pipeline consists of 5 stages:
 * WB: Write Back
 
 #### RAW Hazard Controller
+
+Note: Outdated
 
 ##### Inputs
 
