@@ -201,6 +201,20 @@ R2 logic is the same as R1.
 
 ### Critical Paths
 
+#### Hazard controller
+
+One critical path is the hazard controller in the ID stage:
+
+1. 2 ticks for opcode decoder
+2. 1 tick for register usage check OR gate
+3. 1 tick for register source AND gating
+4. 2 ticks for register source equality check
+5. 2 ticks for hazard controller decoder
+6. 1 tick for PC/IMM source check AND gating
+7. 1 tick for pipeline stage store
+
+Total: 10 ticks
+
 #### Branch
 
 One critical path is BRANCH instruction in the EX stage:
@@ -218,9 +232,11 @@ Total: 9 ticks
 
 #### Memory controller
 
-Another critical path is the memory controller in the MEM stage:
+One critical path is the memory controller in the MEM stage:
 
-1. 9 ticks for memory controller
-2. 1 tick for MEM-OUT-SRC multiplexer
+1. -1 tick for early clock
+2. 8 ticks for memory controller
+3. 2 ticks for synchronization delay
+4. 1 tick for pipeline stage store
 
 Total: 10 ticks
