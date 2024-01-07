@@ -199,17 +199,28 @@ R1 truth table:
 
 R2 logic is the same as R1.
 
-### Critical Path
+### Critical Paths
 
-The critical path is BRANCH instruction in the EX stage:
+#### Branch
+
+One critical path is BRANCH instruction in the EX stage:
 
 1. 1 tick to read register file
 2. 1 tick for ALU input multiplexers
 3. 3 ticks for comparator
+    * Concurrently up to here, 5 ticks for hazard controller EX-STALL signal
 4. 1 tick for comparison multiplexer
-5. 1 tick for checking whether EX stage should be flushed and splitting writes to pipeline stage control lines.
-6. 2 ticks for PC-SRC multiplexer
-    * 1 tick concurrently for pipeline stage clock controller
-7. 1 tick for pipeline stage store
+5. 2 ticks for pipeline buffer clock control logic
+    * 2 tick concurrently for PC-SRC multiplexer
+6. 1 tick for pipeline stage store
+
+Total: 9 ticks
+
+#### Memory controller
+
+Another critical path is the memory controller in the MEM stage:
+
+1. 9 ticks for memory controller
+2. 1 tick for MEM-OUT-SRC multiplexer
 
 Total: 10 ticks
