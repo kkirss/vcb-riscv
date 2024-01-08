@@ -2,6 +2,8 @@
 
 This document describes the v0.1 CPU project - `cpu-v0_1.vcb`.
 
+Note: Shifts are broken due to being too slow.
+
 ## Specs
 
 * RISC-V 32-bit integer ISA (RV32I)
@@ -229,6 +231,19 @@ One critical path is BRANCH instruction in the EX stage:
 6. 1 tick for pipeline stage store
 
 Total: 9 ticks
+
+#### Shift
+
+One critical path is shift instructions in the EX stage:
+
+1. 1 tick to read register file
+2. 1 tick for ALU input multiplexers
+3. 7 ticks for shifter
+4. 1 tick for ALU output multiplexer
+5. 1 tick for execute stage output multiplexers
+6. 1 tick for pipeline stage store
+
+Total: 12 ticks
 
 #### Memory controller
 
