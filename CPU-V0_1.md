@@ -209,11 +209,11 @@ One critical path is the hazard controller in the ID stage:
 2. 1 tick for register usage check OR gate
 3. 1 tick for register source AND gating
 4. 2 ticks for register source equality check
-5. 2 ticks for hazard controller decoder
+5. 1 tick for hazard controller decoder
 6. 1 tick for PC/IMM source check AND gating
 7. 1 tick for pipeline stage store
 
-Total: 10 ticks
+Total: 9 ticks
 
 #### Branch
 
