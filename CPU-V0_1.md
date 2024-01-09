@@ -230,6 +230,19 @@ One critical path is BRANCH instruction in the EX stage:
 
 Total: 9 ticks
 
+### Subtract
+
+One critical path is subtract/add instruction in the EX stage:
+
+1. 1 tick to read register file
+2. 1 tick for ALU input multiplexers
+3. 5 ticks for subtractor/adder
+4. 1 tick for ALU output multiplexer
+5. 1 tick for execute stage output multiplexers
+6. 1 tick for pipeline stage store
+
+Total: 10 ticks
+
 #### Shift
 
 One critical path is shift instructions in the EX stage:
