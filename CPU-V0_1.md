@@ -85,9 +85,10 @@ All multiplexers required:
     * 10: WRITE-DATA
     * 00: r1
 * EX-OUT-SRC:
-    * 10: PC+4
-    * 01: imm
-    * 00: alu-out
+    * 11: PC+4
+    * 10: imm
+    * 01: alu-out
+    * 00: alu-add
 * MEM-OUT-SRC
     * 1: load-data
     * 0: ex-out-data
@@ -237,11 +238,10 @@ One critical path is subtract/add instruction in the EX stage:
 1. 1 tick to read register file
 2. 1 tick for ALU input multiplexers
 3. 5 ticks for subtractor/adder
-4. 1 tick for ALU output multiplexer
-5. 1 tick for execute stage output multiplexers
-6. 1 tick for pipeline stage store
+4. 1 tick for execute stage output multiplexer
+5. 1 tick for pipeline stage store
 
-Total: 10 ticks
+Total: 9 ticks
 
 #### Shift
 
@@ -250,7 +250,7 @@ One critical path is shift instructions in the EX stage:
 1. 1 tick to read register file
 2. 1 tick for ALU input multiplexers
 3. 6 ticks for shifter
-4. 1 tick for execute stage output multiplexers
+4. 1 tick for execute stage output multiplexer
 5. 1 tick for pipeline stage store
 
 Total: 10 ticks
