@@ -2,8 +2,6 @@
 
 This document describes the v0.1 CPU project - `cpu-v0_1.vcb`.
 
-Note: Set less than instructions are temporarily broken due to taking too long.
-
 ## Specs
 
 * RISC-V 32-bit integer ISA (RV32I)
@@ -264,12 +262,11 @@ One critical path is set less than instruction in the EX stage:
 1. 1 tick to read register file
 2. 1 tick for ALU input multiplexers
 3. 5 ticks for subtractor
-4. 1 tick for comparison logic
-5. 1 tick for set less than multiplexing
-6. 1 tick for set less than output buffer
-7. 1 tick for pipeline stage store
+    * 1 tick concurrently for comparison logic
+4. 1 tick for set less than multiplexing
+5. 1 tick for pipeline stage store
 
-Total: 11 ticks
+Total: 9 ticks
 
 #### Memory controller
 
