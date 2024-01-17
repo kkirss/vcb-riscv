@@ -207,14 +207,13 @@ R2 logic is the same as R1.
 One critical path is the hazard controller in the ID stage:
 
 1. 2 ticks for opcode decoder
-2. 1 tick for register usage check OR gate
-3. 1 tick for register source AND gating
-4. 2 ticks for register source equality check
-5. 1 tick for hazard controller decoder
-6. 1 tick for PC/IMM source check AND gating
-7. 1 tick for pipeline stage store
+2. 1 tick for register source AND gating
+3. 2 ticks for register source equality check
+4. 1 tick for hazard controller decoder
+5. 1 tick for PC/IMM source check AND gating
+6. 1 tick for pipeline stage store
 
-Total: 9 ticks
+Total: 8 ticks
 
 #### Branch
 
