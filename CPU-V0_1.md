@@ -222,8 +222,8 @@ One critical path is BRANCH instruction in the EX stage:
 1. 1 tick to read register file
 2. 1 tick for ALU input multiplexers
 3. 3 ticks for comparator
-    * Concurrently up to here, 5 ticks for hazard controller EX-STALL signal
 4. 1 tick for comparison multiplexer
+    * Concurrently up to here, 6 ticks for hazard controller EX-STALL signal
 5. 2 ticks for pipeline buffer clock control logic
     * 2 tick concurrently for PC-SRC multiplexer
 6. 1 tick for pipeline stage store
