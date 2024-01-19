@@ -206,14 +206,17 @@ R2 logic is the same as R1.
 
 One critical path is the hazard controller in the ID stage:
 
-1. 2 ticks for opcode decoder
-2. 1 tick for register source AND gating
-3. 2 ticks for register source equality check
-4. 1 tick for hazard controller decoder
-5. 1 tick for PC/IMM source check AND gating
-6. 1 tick for pipeline stage store
+1. 2 ticks for register file read signals
+    * 1 tick concurrently for register source equality check
+    * 2 ticks concurrently for ALU PC/IMM source signals
+2. 1 tick for read-after-write hazard check
+    * 1 tick concurrently for ALU PC/IMM source negation
+3. 1 tick for hazard controller decoder
+    * EX-STALL signal is generated here
+4. 1 tick for PC/IMM source check AND gating
+5. 1 tick for pipeline stage store
 
-Total: 8 ticks
+Total: 6 ticks
 
 #### Branch
 
@@ -223,7 +226,7 @@ One critical path is BRANCH instruction in the EX stage:
 2. 1 tick for ALU input multiplexers
 3. 3 ticks for comparator
 4. 1 tick for comparison multiplexer
-    * Concurrently up to here, 6 ticks for hazard controller EX-STALL signal
+    * 4 ticks concurrently for EX-STALL signal
 5. 2 ticks for pipeline buffer clock control logic
     * 2 tick concurrently for PC-SRC multiplexer
 6. 1 tick for pipeline stage store
