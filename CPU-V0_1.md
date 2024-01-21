@@ -6,7 +6,7 @@ This document describes the v0.1 CPU project - `cpu-v0_1.vcb`.
 
 * RISC-V 32-bit integer ISA (RV32I)
 * 5 stage pipeline with forwarding
-* 9-tick clock
+* 8-tick clock
 * 32 registers
 * VMEM for instruction & data memory
 
@@ -222,53 +222,49 @@ Total: 6 ticks
 
 One critical path is BRANCH instruction in the EX stage:
 
-1. 1 tick to read register file
-2. 1 tick for ALU input multiplexers
-3. 3 ticks for comparator
-4. 1 tick for comparison multiplexer
+1. 1 tick for ALU input multiplexers
+2. 3 ticks for comparator
+3. 1 tick for comparison multiplexer
     * 4 ticks concurrently for EX-STALL signal
-5. 2 ticks for pipeline buffer clock control logic
+4. 2 ticks for pipeline buffer clock control logic
     * 2 tick concurrently for PC-SRC multiplexer
-6. 1 tick for pipeline stage store
+5. 1 tick for pipeline stage store
 
-Total: 9 ticks
+Total: 8 ticks
 
 ### Subtract
 
 One critical path is subtract/add instruction in the EX stage:
 
-1. 1 tick to read register file
-2. 1 tick for ALU input multiplexers
-3. 5 ticks for subtractor/adder
-4. 1 tick for ALU/execute multiplexer
-5. 1 tick for pipeline stage store
+1. 1 tick for ALU input multiplexers
+2. 5 ticks for subtractor/adder
+3. 1 tick for ALU/execute multiplexer
+4. 1 tick for pipeline stage store
 
-Total: 9 ticks
+Total: 8 ticks
 
 #### Shift
 
 One critical path is shift instructions in the EX stage:
 
-1. 1 tick to read register file
-2. 1 tick for ALU input multiplexers
-3. 6 ticks for shifter
+1. 1 tick for ALU input multiplexers
+2. 6 ticks for shifter
     * This includes ALU/execute multiplexing
-4. 1 tick for pipeline stage store
+3. 1 tick for pipeline stage store
 
-Total: 9 ticks
+Total: 8 ticks
 
 #### Set less than
 
 One critical path is set less than instruction in the EX stage:
 
-1. 1 tick to read register file
-2. 1 tick for ALU input multiplexers
-3. 5 ticks for subtractor
+1. 1 tick for ALU input multiplexers
+2. 5 ticks for subtractor
     * 1 tick concurrently for comparison logic
-4. 1 tick for set less than multiplexing
-5. 1 tick for pipeline stage store
+3. 1 tick for set less than multiplexing
+4. 1 tick for pipeline stage store
 
-Total: 9 ticks
+Total: 8 ticks
 
 #### Memory controller
 
@@ -276,7 +272,6 @@ One critical path is the memory controller in the MEM stage:
 
 1. -1 tick for early clock
 2. 8 ticks for memory controller
-3. 1 ticks for synchronization delay
-4. 1 tick for pipeline stage store
+3. 1 tick for pipeline stage store
 
-Total: 9 ticks
+Total: 8 ticks
