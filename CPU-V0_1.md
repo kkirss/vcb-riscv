@@ -248,11 +248,11 @@ Total: 7 ticks
 One critical path is shift instructions in the EX stage:
 
 1. 1 tick for ALU input multiplexers
-2. 6 ticks for shifter
+2. 4 ticks for shifter
     * This includes ALU/execute multiplexing
 3. 1 tick for pipeline stage store
 
-Total: 8 ticks
+Total: 6 ticks
 
 #### Set less than
 
