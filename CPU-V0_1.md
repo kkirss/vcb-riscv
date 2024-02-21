@@ -238,11 +238,11 @@ Total: 7 ticks
 One critical path is subtract/add instruction in the EX stage:
 
 1. 1 tick for ALU input multiplexers/inverter
-2. 4 ticks for adder
+2. 3 ticks for adder
 3. 1 tick for ALU/execute multiplexer
 4. 1 tick for pipeline stage store
 
-Total: 7 ticks
+Total: 6 ticks
 
 #### Shift
 
@@ -260,12 +260,12 @@ Total: 6 ticks
 One critical path is set less than instruction in the EX stage:
 
 1. 1 tick for ALU input multiplexers/inverter
-2. 4 ticks for adder
+2. 3 ticks for adder
     * 1 tick concurrently for comparison logic
 3. 1 tick for set less than multiplexing
 4. 1 tick for pipeline stage store
 
-Total: 7 ticks
+Total: 6 ticks
 
 #### Memory controller
 
