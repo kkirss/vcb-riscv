@@ -48,7 +48,8 @@ Credits to VCB Discord community members:
 * @Jerry's register file cell
 * @nikamir's VICP inspired the chip-based design
 * @liq3's adder & async memory controller concept
-* @rty's adder
+* @rtyyyyb's 4-tick quantum CLA adder
+* @legocuber's 3-tick quantum double CLA adder
 * @Cake_Eater's signed decimal display
 
 Huge thanks to you 🙂
