@@ -2,6 +2,18 @@
 
 This document describes the v0.1 CPU project - `cpu-v0_1.vcb`.
 
+## Media
+
+![Editor Wiring View](media/cpu-v0_1-editor-wires.png)
+
+![Editor Decorated View](media/cpu-v0_1-editor-decorated.png)
+
+![CPU Wiring View](media/cpu-v0_1-doom-wires.png)
+
+![CPU Decorated View](media/cpu-v0_1-doom-decorated.png)
+
+![Demo of CPU running Doom](media/cpu-v0_1-doom.mp4)
+
 ## Specs
 
 * RISC-V 32-bit integer ISA (RV32I)

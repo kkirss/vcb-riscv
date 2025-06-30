@@ -2,6 +2,12 @@
 
 Virtual Circuit Board (VCB) RISC-V CPU.
 
+##### Demo
+
+[Demo of CPU running Doom](https://github.com/user-attachments/assets/df3860e0-d931-43ab-8c04-e675d699a8ad)
+
+![Editor Wiring View](media/cpu-v0_1-editor-wires.png)
+
 ## Virtual Circuit Board
 
 This project is for use with Virtual Circuit Board (vcb).
