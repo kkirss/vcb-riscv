@@ -285,8 +285,9 @@ Total: 6 ticks
 One critical path is the memory controller in the MEM stage:
 
 1. -2 tick for early clock
-2. 7 ticks for memory controller
+2. 6 ticks for memory controller
+    * Note: CPU currently delays this to 7 ticks as memory controller has to be timed exactly to CPU clock.
 3. 1 tick for synchronization delay
 4. 1 tick for pipeline stage store
 
-Total: 7 ticks
+Total: 6 ticks
