@@ -1,12 +1,12 @@
-# vcb-riscv
+# ViPeR RISC-V CPU
 
-Virtual Circuit Board (VCB) RISC-V CPU.
+ViPeR 32-bit Pipelined RISC-V CPU
 
 ##### Demo
 
 [Demo of CPU running Doom](https://github.com/user-attachments/assets/df3860e0-d931-43ab-8c04-e675d699a8ad)
 
-![Editor Wiring View](media/cpu-v0_1-editor-wires.png)
+![Editor Wiring View](media/viper/viper-editor-wires.png)
 
 ## Virtual Circuit Board
 
@@ -20,11 +20,11 @@ There is a VCB file for various common components - `components.vcb`.
 
 It includes labels for everything and should be relatively straight-forward to understand.
 
-## CPU
+## ViPeR RISC-V CPU
 
-There is a VCB file for a RISC-V CPU - `cpu-v0_1.vcb`.
+There is a VCB file for the ViPeR RISC-V CPU - `viper-cpu.vcb`.
 
-See [CPU-V0_1.md](CPU-V0_1.md) for more details.
+See [VIPER.md](VIPER.md) for more details.
 
 ## Software
 

@@ -1,18 +1,26 @@
-# 32-bit Pipelined RISC-V CPU
+# ViPeR 32-bit Pipelined RISC-V CPU
 
-This document describes the v0.1 CPU project - `cpu-v0_1.vcb`.
+This document describes the ViPeR CPU - `viper-cpu.vcb`.
+
+## Name
+
+ViPeR is a
+**V**irtual Circuit Board
+**P**ipelined
+**R**ISC-V CPU
+
 
 ## Media
 
-![Editor Wiring View](media/cpu-v0_1-editor-wires.png)
+![Editor Wiring View](media/viper/viper-editor-wires.png)
 
-![Editor Decorated View](media/cpu-v0_1-editor-decorated.png)
+![Editor Decorated View](media/viper/viper-editor-decorated.png)
 
-![CPU Wiring View](media/cpu-v0_1-doom-wires.png)
+![CPU Wiring View](media/viper/viper-doom-wires.png)
 
-![CPU Decorated View](media/cpu-v0_1-doom-decorated.png)
+![CPU Decorated View](media/viper/viper-doom-decorated.png)
 
-![Demo of CPU running Doom](media/cpu-v0_1-doom.mp4)
+![Demo of CPU running Doom](media/viper/viper-doom.mp4)
 
 ## Specs
 

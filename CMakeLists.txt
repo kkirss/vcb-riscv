@@ -8,7 +8,7 @@ set(CMAKE_OBJDUMP "${TOOLCHAIN_PREFIX}-objdump")
 cmake_minimum_required(VERSION 3.13)
 project(vcb-riscv VERSION 1.0 LANGUAGES CXX C ASM)
 
-set(CPU_NAME "cpu-v0_1")
+set(CPU_NAME "viper-cpu")
 
 set(RAM_SIZE "4096K") # 4096K bytes is max size of VMEM (20 bit address of 32-bit word -> 2^20 * (32/8) = 4096K)
 set(DISPLAY_POINTER_ADDRESS "0x3FFFF4")

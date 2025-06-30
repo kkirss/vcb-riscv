@@ -8,10 +8,10 @@ from riscof.pluginTemplate import pluginTemplate
 logger = logging.getLogger()
 
 
-class vcb_0_1(pluginTemplate):
-    __model__ = "vcb_0_1"
+class viper(pluginTemplate):
+    __model__ = "viper"
 
-    __version__ = "0.1"
+    __version__ = "1.0"
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
@@ -107,7 +107,7 @@ class vcb_0_1(pluginTemplate):
         # will be useful in setting integer value in the compiler string (if not already hardcoded);
         self.xlen = ('64' if 64 in ispec['supported_xlen'] else '32')
 
-        # for vcb_0_1 start building the '--isa' argument. the self.isa is dutnmae specific and may not be
+        # for viper start building the '--isa' argument. the self.isa is dutnmae specific and may not be
         # useful for all DUTs
         self.isa = 'rv' + self.xlen
         if "I" in ispec["ISA"]:
