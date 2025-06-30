@@ -4,7 +4,7 @@ ViPeR 32-bit Pipelined RISC-V CPU
 
 ##### Demo
 
-[Demo of CPU running Doom](https://github.com/user-attachments/assets/df3860e0-d931-43ab-8c04-e675d699a8ad)
+[Demo of CPU running Doom](https://github.com/user-attachments/assets/52288648-19bf-40f0-a936-023b99049198)
 
 ![Editor Wiring View](media/viper/viper-editor-wires.png)
 
