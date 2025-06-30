@@ -10,9 +10,9 @@ build
 src/**/*.o
 src/**/*.d
 src/**/*.s
-riscof/riscof_work
-riscof/riscv-arch-test
-riscof/riscv-plugins
+riscof/riscof_work/
+riscof/riscv-arch-test/
+riscof/riscv-plugins/
 *.vcbmem
 *.backup
 
