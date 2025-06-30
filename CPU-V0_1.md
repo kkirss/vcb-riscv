@@ -45,10 +45,10 @@ This document describes the v0.1 CPU project - `cpu-v0_1.vcb`.
 
 * [x] Use faster adder for ALU
 * [x] Add Virtual Display
-* [ ] Write display driver for Virtual Display
+* [x] Write display driver for Virtual Display
 * [x] Add data forwarding to avoid RAW hazard halts
-* [ ] Speed up clock (in ticks)
-* [ ] Use a more compact PC incrementor
+* [x] Speed up clock (in ticks)
+* [x] Use a more compact PC incrementor
 * [x] Add support for byte & half-word loads
 
 (Leaving out multiplication, division & floating point math for now. Perhaps something for the next version.)
