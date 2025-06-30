@@ -36,6 +36,7 @@ This document describes the v0.1 CPU project - `cpu-v0_1.vcb`.
 
 * Memory only works for word-aligned access.
     * gcc compiler flag `-mstrict-align` enforces this.
+    * Note: Mis-aligned reads and writes are supported as long as they don't cross word boundaries. (This is true for all byte-sized reads and some half-sized reads and writes.) 
 * `ecall` doesn't do anything
 * `ebreak` doesn't do anything
 * Exceptions/traps aren't raised
